@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// ESTA ES LA LÍNEA QUE TE FALTA PARA QUE LEA TU CARPETA PUBLIC:
+app.use(express.static('public'));
+
 //------------------
 // CONEXION A SUPABASE USANDO LAS VARIABLES DEL ARCHIVO .ENV 
 
@@ -81,10 +84,11 @@ app.use('/api/extraRepa', extraRuta);
 //------------------
 // RUTA PRUEBA PARA SABER SI EL SERVIDOR FUNCIONA 
 
-app.get("/",(req,res)=>{
+// RUTA PARA QUE EL LOGIN SEA LA PÁGINA INICIAL
+const path = require('path');
 
-res.send("Servidor para el sitio web bike_code funcionando");
-
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 //------------------
