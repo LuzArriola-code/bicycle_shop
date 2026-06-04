@@ -87,10 +87,10 @@ app.use('/api/extraRepa', extraRuta);
 // RUTA PARA QUE EL LOGIN SEA LA PÁGINA INICIAL
 const path = require('path');
 
+// Esto busca login.html directamente donde está el servidor.js
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'login.html'));
 });
-
 //------------------
 // LEVANTAR EL SERVIDOR 
 
