@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// ESTA ES LA LÍNEA QUE TE FALTA PARA QUE LEA TU CARPETA PUBLIC:
-app.use(express.static('public'));
+// ESTO LE DICE A EXPRESS: "Cualquier archivo que pidan (CSS, JS, PNG), búscalo en la carpeta donde está servidor.js"
+app.use(express.static(__dirname));
 
 //------------------
 // CONEXION A SUPABASE USANDO LAS VARIABLES DEL ARCHIVO .ENV 

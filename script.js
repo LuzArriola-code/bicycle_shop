@@ -865,7 +865,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function cargarTiposEnSelect() {
     try {
       const respuesta = await fetch(
-        "http://localhost:3000/api/reparaciones/listaReparaciones",
+        "/api/reparaciones/listaReparaciones",
       );
       const reparaciones = await respuesta.json();
 
@@ -1091,7 +1091,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const respuesta = await fetch(
-        `http://localhost:3000/api/ventas/editarVenta/${idVenta}`,
+        `/api/ventas/editarVenta/${idVenta}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -1191,7 +1191,7 @@ async function guardarUsuario(e) {
 
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/usuarios/registroUser",
+      "/api/usuarios/registroUser",
       {
         method: "POST",
         headers: {
@@ -1220,7 +1220,7 @@ async function guardarUsuario(e) {
 async function obtenerUsuarios() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/usuarios/listaUsuarios",
+      "/api/usuarios/listaUsuarios",
     );
     const usuarios = await respuesta.json();
 
@@ -1328,7 +1328,7 @@ async function actualizarUsuario(e) {
 
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/usuarios/editarUser/${id}`,
+      `/api/usuarios/editarUser/${id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -1360,7 +1360,7 @@ async function enviarAPapelera(id) {
 
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/usuarios/papeleraUser/${id}`,
+      `/api/usuarios/papeleraUser/${id}`,
       {
         method: "PUT", // Usamos PUT porque modifica el campo 'estado'
       },
@@ -1418,7 +1418,7 @@ async function guardarProveedor(e) {
 
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/proveedores/registroProveedor",
+      "/api/proveedores/registroProveedor",
       {
         method: "POST",
         headers: {
@@ -1447,7 +1447,7 @@ async function guardarProveedor(e) {
 async function obtenerProveedores() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/proveedores/listaProveedores",
+      "/api/proveedores/listaProveedores",
     );
     const proveedores = await respuesta.json();
 
@@ -1544,7 +1544,7 @@ if (respuesta.ok && Array.isArray(proveedores)) {
 async function actualizarProveedor(id, datosActualizados) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/proveedores/editarProv/${id}`,
+      `/api/proveedores/editarProv/${id}`,
       {
         method: "PUT",
         headers: {
@@ -1575,7 +1575,7 @@ async function actualizarProveedor(id, datosActualizados) {
 async function enviarProveedorAPapelera(id) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/proveedores/papeleraProv/${id}`,
+      `/api/proveedores/papeleraProv/${id}`,
       {
         method: "PUT",
       },
@@ -1622,7 +1622,7 @@ async function guardarCliente(e) {
 
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/clientes/registroCliente",
+      "/api/clientes/registroCliente",
       {
         method: "POST",
         headers: {
@@ -1655,7 +1655,7 @@ async function guardarCliente(e) {
 async function obtenerClientes() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/clientes/listaClientes",
+      "/api/clientes/listaClientes",
     );
     const clientes = await respuesta.json();
 
@@ -1752,7 +1752,7 @@ async function obtenerClientes() {
 async function actualizarCliente(id, datosActualizados) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/clientes/editarCliente/${id}`,
+      `/api/clientes/editarCliente/${id}`,
       {
         method: "PUT",
         headers: {
@@ -1788,7 +1788,7 @@ async function actualizarCliente(id, datosActualizados) {
 async function enviarClienteAPapelera(id) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/clientes/papeleraCliente/${id}`,
+      `/api/clientes/papeleraCliente/${id}`,
       {
         method: "PUT",
       },
@@ -1816,7 +1816,7 @@ async function enviarClienteAPapelera(id) {
 async function cargarSelectProveedores() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/proveedores/listaProveedores",
+      "/api/proveedores/listaProveedores",
     );
     const proveedores = await respuesta.json();
 
@@ -1842,7 +1842,7 @@ async function cargarSelectProveedores() {
 async function guardarNuevoProducto(datosProducto) {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/productos/registroProductos",
+      "/api/productos/registroProductos",
       {
         method: "POST",
         headers: {
@@ -1972,7 +1972,7 @@ async function guardarNuevoProducto(datosProducto) {
 async function obtenerProductos() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/productos/listaProductos",
+      "/api/productos/listaProductos",
     );
     const productos = await respuesta.json();
 
@@ -2096,7 +2096,7 @@ async function obtenerProductos() {
 async function cargarProveedoresEdicion(idProveedorActual) {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/proveedores/listaProveedores",
+      "/api/proveedores/listaProveedores",
     );
     const proveedores = await respuesta.json();
 
@@ -2127,7 +2127,7 @@ async function cargarProveedoresEdicion(idProveedorActual) {
 async function actualizarProducto(id, datosModificados) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/productos/editarProducto/${id}`,
+      `/api/productos/editarProducto/${id}`,
       {
         method: "PUT",
         headers: {
@@ -2156,7 +2156,7 @@ async function actualizarProducto(id, datosModificados) {
 async function borrarProductoLogico(id) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/productos/papeleraProd/${id}`,
+      `/api/productos/papeleraProd/${id}`,
       {
         method: "PUT", // Usamos PUT tal cual lo definiste en tu backend
       },
@@ -2183,7 +2183,7 @@ async function borrarProductoLogico(id) {
 async function cargarSelectClientesRepa() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/clientes/listaClientes",
+      "/api/clientes/listaClientes",
     ); // Ajustá esta URL a tu API de clientes
     const clientes = await respuesta.json();
 
@@ -2206,7 +2206,7 @@ async function cargarSelectClientesRepa() {
 async function guardarNuevaReparacion(datosReparacion) {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/reparaciones/registroReparacion",
+      "/api/reparaciones/registroReparacion",
       {
         method: "POST",
         headers: {
@@ -2239,7 +2239,7 @@ async function guardarNuevaReparacion(datosReparacion) {
 async function obtenerReparaciones() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/reparaciones/listaReparaciones",
+      "/api/reparaciones/listaReparaciones",
     );
     const reparaciones = await respuesta.json();
 
@@ -2356,7 +2356,7 @@ async function obtenerReparaciones() {
 async function cargarClientesEdicionRepa(idClienteActual) {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/clientes/listaClientes",
+      "/api/clientes/listaClientes",
     );
     const clientes = await respuesta.json();
 
@@ -2389,7 +2389,7 @@ async function cargarClientesEdicionRepa(idClienteActual) {
 async function actualizarReparacion(id, datosModificados) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/reparaciones/editarRepa/${id}`,
+      `/api/reparaciones/editarRepa/${id}`,
       {
         method: "PUT",
         headers: {
@@ -2418,7 +2418,7 @@ async function actualizarReparacion(id, datosModificados) {
 async function borrarReparacionLogica(id) {
   try {
     const respuesta = await fetch(
-      `http://localhost:3000/api/reparaciones/papeleraRepa/${id}`,
+      `/api/reparaciones/papeleraRepa/${id}`,
       {
         method: "PUT", // Coincide con el router.put de tu backend
       },
@@ -2448,7 +2448,7 @@ async function obtenerFacturaReparaciones() {
 
     // Fetch de reparaciones
     const res = await fetch(
-      "http://localhost:3000/api/reparaciones/listaReparaciones",
+      "/api/reparaciones/listaReparaciones",
     );
     const reparaciones = await res.json();
 
@@ -2620,7 +2620,7 @@ function filtrarTabla() {
 async function cargarClientesVenta() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/clientes/listaClientes",
+      "/api/clientes/listaClientes",
     );
     const clientes = await respuesta.json();
 
@@ -2643,7 +2643,7 @@ async function cargarClientesVenta() {
 async function precargarProductosVenta() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/productos/listaProductos",
+      "/api/productos/listaProductos",
     ); // Tu API común de productos activos
     if (respuesta.ok) {
       listaProductosGlobal = await respuesta.json();
@@ -2693,7 +2693,7 @@ function filtrarProductosPorCategoria(categoriaSeleccionada) {
 async function guardarNuevaVenta(datosVenta) {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/ventas/registroVenta",
+      "/api/ventas/registroVenta",
       {
         method: "POST",
         headers: {
@@ -2722,7 +2722,7 @@ async function guardarNuevaVenta(datosVenta) {
 async function obtenerVentas() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/ventas/listaVentas",
+      "/api/ventas/listaVentas",
     );
     const ventas = await respuesta.json();
 
@@ -2885,7 +2885,7 @@ async function ejecutarBorradoLogicoVenta(idVenta) {
   try {
     // Le pegamos a la ruta PUT del backend
     const respuesta = await fetch(
-      `http://localhost:3000/api/ventas/borrarVenta/${idVenta}`,
+      `/api/ventas/borrarVenta/${idVenta}`,
       {
         method: "PUT",
       },
@@ -2911,7 +2911,7 @@ async function ejecutarBorradoLogicoVenta(idVenta) {
 async function cargarRepuestosEnSelect() {
   try {
     const respuesta = await fetch(
-      "http://localhost:3000/api/productos/listaProductos",
+      "/api/productos/listaProductos",
     );
     const productos = await respuesta.json();
 
@@ -3037,7 +3037,7 @@ btnGuardarExtrasFinal.addEventListener("click", async function () {
 
     try {
       const respuesta = await fetch(
-        "http://localhost:3000/api/extraRepa/registroExtra",
+        "/api/extraRepa/registroExtra",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -3093,7 +3093,7 @@ async function obtenerYDibujarExtras() {
     contenedorExtra.innerHTML = `<p style="color: #666; font-style: italic;">Cargando registros...</p>`;
 
     const respuesta = await fetch(
-      "http://localhost:3000/api/extraRepa/listarExtras",
+      "/api/extraRepa/listarExtras",
     );
     const datos = await respuesta.json();
 
@@ -3213,7 +3213,7 @@ window.borrarRegistroExtra = async function (idExtra, productoId, cantidad) {
   try {
     // 🌟 ACÁ ESTABA EL ERROR: Cambiamos "PUT" por "DELETE" para que coincida con tu backend
     const respuesta = await fetch(
-      `http://localhost:3000/api/extraRepa/eliminarExtra/${idExtra}`,
+      `/api/extraRepa/eliminarExtra/${idExtra}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -3251,7 +3251,7 @@ window.obtenerFacturaVentas = async function () {
     contenedor.innerHTML = `<p>Cargando...</p>`;
 
     // 1. Solo necesitamos las ventas
-    const resV = await fetch("http://localhost:3000/api/ventas/listaVentas");
+    const resV = await fetch("/api/ventas/listaVentas");
     const ventas = await resV.json();
 
     // --- ORDENAMIENTO FORZADO (ASC por ID y FECHA) ---
