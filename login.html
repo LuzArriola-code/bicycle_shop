@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="login.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div id="mensajeError" class="alerta-error oculto"></div>
+
+    <div id="contenedorLogin">
+        <h2>Iniciar Sesión</h2>
+        <hr>
+
+        <div id="mensajeError" class="oculto"></div>
+
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="loginUser">Usuario:</label>
+                <input type="text" id="loginUser" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="loginPassword">Contraseña:</label>
+                <div class="campo-password-contenedor">
+                    <input type="password" id="loginPassword" required autocomplete="current-password">
+                    <button type="button" id="btnAlternarPassword" class="btn-ojo">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-acciones">
+                <button type="submit" id="btnIngresar">🔑 Ingresar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+
+</html>

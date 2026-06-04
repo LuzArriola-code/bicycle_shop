@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="diseño.css">
+    <link rel="stylesheet" href="mensaje.css">
+
+</head>
+
+<body>
+
+
+    <div id="miMensaje" style="display:none; position:fixed; top:10px; right:10px; z-index:999999; background:red; color:white; padding:20px; font-size:20px; border-radius:10px;">
+    <span id="textoMensaje"></span>
+</div>
+
+    <!------------------------------------------------------>
+    <!--                    MOVILES                        -->
+
+    <button class="btn-toggle-movil" onclick="toggleMenuMovil()" id="btnMenuMovil">
+        🡆</button>
+
+    <!------------------------------------------------------>
+    <!--                    ESCRITORIO                      -->
+
+    <aside class="menu-acordeon" id="menuPrincipal">
+
+        <div class="menu-header">
+            <img src="img/logo.png" alt="Logo" class="logo-redondo">
+        </div>
+
+        <div class="menu-scroll">
+
+            <details class="tarjeta">
+                <summary>Gestión de Usuarios</summary>
+                <button id="btnAbrirModal" class="btn-agregar">Agregar Usuario</button>
+                <button id="btnVerUsuarios" class="btn-ver">Ver Usuarios</button>
+            </details>
+
+            <details class="tarjeta">
+                <summary>Proveedores</summary>
+                <button id="modalProv" class="btn-agregar">Agregar Proveedor</button>
+                <button id="btnVerProveedor" class="btn-ver">Ver Proveedores</button>
+            </details>
+
+            <details class="tarjeta">
+                <summary>Clientes</summary>
+                <button id="btnModalCliente" class="btn-agregar">Agregar Cliente</button>
+                <button id="btnVerClientes" class="btn-ver">Ver Clientes</button>
+            </details>
+
+            <details class="tarjeta">
+                <summary>Productos e Inventario</summary>
+                <button id="btnModalProd" class="btn-agregar">Agregar Producto</button>
+                <button id="btnVerProd" class="btn-ver">Ver Productos</button>
+            </details>
+
+            <details class="tarjeta">
+                <summary>Taller y Ventas</summary>
+                <button id="btnModalReparacion" class="btn-agregar">Nueva Reparación</button>
+                <button id="btnVerRepa" class="btn-ver">Ver Reparaciones</button>
+                <button id="btnFacR" class="btn-ver">Factura Reparaciones</button>
+                <hr>
+                <button id="btnModalExtraR" class="btn-agregar">Agregar Info Extra</button>
+                <button id="btnVerExtra" class="btn-ver">Ver Extras</button>
+                <hr>
+                <button id="btnModalVentas" class="btn-agregar">Nueva Venta</button>
+                <button id="btnVerVenta" class="btn-ver">Ver Ventas</button>
+                <button id="btnFacV" class="btn-ver">Factura Ventas</button>
+            </details>
+
+        </div>
+        <div class="menu-footer">
+            <a href="papelera.html"><button id="btnIrPapelera" class="btn-ver">Papelera</button></a>
+            <button id="btnCerrarSesion" class="btn-footer btn-salir">Cerrar Sesión</button>
+        </div>
+
+    </aside>
+
+    <!---------------------------------------------------------------------------->
+    <!-- TABLAS -->
+    <main id="main-content">
+
+        <!-- CONTENEDOR DE LA TABLA USUARIOS -->
+        <div id="contenedorUsuarios" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA PROVEEDORES -->
+        <div id="contenedorProveedores" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA CLIENTES -->
+        <div id="contenedorClientes" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA PRODUCTOS -->
+        <div id="contenedorProductos" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA REPARACIONES -->
+        <div id="contenedorRepa" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA FACTURA REPA -->
+
+        <div id="seccionFacturaRepa" class="oculto">
+            <div id="controlesFiltro">
+                <select id="filtroCliente">
+                    <option value="">-- Todos los Clientes --</option>
+                </select>
+                <select id="filtroEstado">
+                    <option value="">-- Todos los Estados --</option>
+                    <option value="Pagado">Pagado</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
+                <button id="btnDescargarPDF" class="btn-cargar">📥 Descargar Factura</button>
+            </div>
+            <div id="contenedorFRepa" class="contenedor-tabla"></div>
+        </div>
+
+
+        <!-- CONTENEDOR DE LA TABLA VENTAS  -->
+        <div id="contenedorVentas" class="contenedor-tabla"></div>
+
+        <!-- CONTENEDOR DE LA TABLA FACTURA VENTAS -->
+
+        <div id="seccionFacturaVentas" class="oculto">
+            <div id="controlesFiltroVentas" class="controles-filtro">
+                <select id="filtroClienteV">
+                    <option value="">-- Todos los Clientes --</option>
+                </select>
+                <select id="filtroEstadoV">
+                    <option value="">-- Todos los Estados --</option>
+                    <option value="Pagada">Pagada</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
+                <button id="btnDescargarPDFVentas" class="btn-cargar">📥 Descargar Factura</button>
+            </div>
+            <div id="contenedorFactV" class="contenedor-tabla"></div>
+        </div>
+
+        <!-- CONTENEDOR DE LA TABLA EXTRA -->
+        <div id="contenedorExtra" class="contenedor-tabla"></div>
+
+
+
+
+    </main>
+
+    <!----------------------------------------------------------------------------------------->
+
+    <!--          --- USUARIOS ---                            -->
+
+    <!-- CONTENEDOR PARA EL NUEVO USUARIO -->
+
+    <div id="modalUsuario" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span id="btnCerrarModal" class="modal-close">&times;</span>
+
+            <h2>REGISTRAR NUEVO USUARIO</h2>
+            <hr>
+
+            <form id="formUsuario">
+                <div class="form-group">
+                    <label for="userName">Nombre de Usuario:</label>
+                    <input type="text" id="userName" placeholder="Ej: 123_dev" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rol">Rol del Usuario:</label>
+                    <select id="rol">
+                        <option value="Admin">Admin</option>
+                        <option value="Dueño">Dueño</option>
+                    </select>
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="btn-guardar">💾 Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- MODAL EDICION USUARIOS -->
+
+    <div id="modalEditarUsuario" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrar-ventana">&times;</span>
+
+            <h2>EDITAR USUARIO</h2>
+            <hr>
+
+            <form id="formEditarUsuario">
+                <input type="hidden" id="editUserId">
+
+                <div class="form-group">
+                    <label for="editUserName">Nombre de Usuario:</label>
+                    <input type="text" id="editUserName">
+                </div>
+
+                <div class="form-group">
+                    <label for="editPassword">Contraseña:</label>
+                    <input type="password" id="editPassword" placeholder="No es obligatorio">
+                </div>
+
+                <div class="form-group">
+                    <label for="editRol">Rol del Usuario:</label>
+                    <select id="editRol"></select>
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="btn-actualizar">🔄 Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!----------------------------------------------------------------------------------------->
+    <!--          --- PROVEEDORES ---                            -->
+
+    <!-- CONTENEDOR PARA AGREGAR NUEVO PROVEEDOR-->
+
+    <div id="modalProveedor" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span id="CerrarModalProv" class="modal-close">&times;</span>
+
+            <h2>REGISTRAR NUEVO PROVEEDOR</h2>
+            <hr>
+
+            <form id="formProveedor">
+                <div class="form-group">
+                    <label for="nameProv">Nombre Completo:</label>
+                    <input type="text" id="nameProv" placeholder="Juan Martinez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="numeroProv">Telefono:</label>
+                    <input type="text" id="numeroProv" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="direccionProv">Direccion</label>
+                    <input type="text" id="direccionProv" required>
+
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="guardarProv">💾 Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- MODAL EDICION PROVEEDORES -->
+
+    <div id="modalEditarProv" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrarE_Prov">&times;</span>
+
+            <h2>EDITAR PROVEEDOR</h2>
+            <hr>
+
+            <form id="formEditarProv">
+                <input type="hidden" id="editProvId">
+
+                <div class="form-group">
+                    <label for="editProvName">Nombre Completo:</label>
+                    <input type="text" id="editProvName">
+                </div>
+
+                <div class="form-group">
+                    <label for="editNumero">Telefono:</label>
+                    <input type="text" id="editNumero">
+                </div>
+
+                <div class="form-group">
+                    <label for="editDire">Direccion:</label>
+                    <input type="text" id="editDire">
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="Btn_actuProv">🔄 Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!----------------------------------------------------------------------------------------->
+    <!--          --- CLIENTES ---                            -->
+
+    <!-- CONTENEDOR PARA AGREGAR NUEVO CLIENTE-->
+
+    <div id="modalCliente" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span id="CerrarModalCliente" class="modal-close">&times;</span>
+
+            <h2>REGISTRAR NUEVO CLIENTE</h2>
+            <hr>
+
+            <form id="formCliente">
+                <div class="form-group">
+                    <label for="nameCliente">Nombre Completo:</label>
+                    <input type="text" id="nameCliente" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="numeroCliente">Telefono:</label>
+                    <input type="text" id="numeroCliente" required>
+                </div>
+
+
+
+                <div class="form-acciones">
+                    <button type="submit" class="guardarCliente">💾 Guardar Cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- MODAL EDICION CLIENTES -->
+
+    <div id="modalEditarCliente" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrarECliente">&times;</span>
+
+            <h2>EDITAR CLIENTE</h2>
+            <hr>
+
+            <form id="formEditarCliente">
+                <input type="hidden" id="editCli_Id">
+
+                <div class="form-group">
+                    <label for="editCli_Name">Nombre Completo:</label>
+                    <input type="text" id="editCli_Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_tel">Telefono:</label>
+                    <input type="text" id="edit_tel">
+                </div>
+
+
+                <div class="form-acciones">
+                    <button type="submit" class="Btn_actuCliente">🔄 Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!----------------------------------------------------------------------------------------->
+    <!--          --- PRODUCTOS ---                            -->
+
+    <div id="modalNuevoProd" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrarN_Prod">&times;</span>
+
+            <h2>REGISTRAR NUEVO PRODUCTO</h2>
+            <hr>
+
+            <form id="formNuevoProd">
+                <div class="form-group">
+                    <label for="prodFecha">Fecha de Compra:</label>
+                    <input type="date" id="prodFecha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodProveedor">Proveedor:</label>
+                    <select id="prodProveedor" required>
+                        <option value="" disabled selected>-- Seleccionar Proveedor --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodTipo">Tipo de Producto:</label>
+                    <select id="prodTipo" required>
+                        <option value="" disabled selected>-- Elegir Tipo --</option>
+                        <option value="accesorio">Accesorio</option>
+                        <option value="bici">Bicicleta</option>
+                        <option value="repuesto">Repuesto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodName">Nombre del Producto:</label>
+                    <input type="text" id="prodName" placeholder="Ej: Camara Rodado 29" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodCantidad">Cantidad Comprada:</label>
+                    <input type="number" id="prodCantidad" min="1" placeholder="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="prodCosto">Costo Total ($):</label>
+                    <input type="number" step="0.01" id="prodCosto" placeholder="0.00" required>
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="Btn_guardarProd">💾 Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- MODAL EDITAR PRODUCTOS-->
+
+    <div id="modalEditarProd" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrarE_Prod">&times;</span>
+
+            <h2>EDITAR PRODUCTO</h2>
+            <hr>
+
+            <form id="formEditarProd">
+                <input type="hidden" id="editProdId">
+                <div class="form-group">
+                    <label for="editProdFecha">Fecha de Compra:</label>
+                    <input type="date" id="editProdFecha" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdProveedor">Proveedor:</label>
+                    <select id="editProdProveedor" required>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdTipo">Tipo de Producto:</label>
+                    <select id="editProdTipo" required>
+                        <option value="accesorio">Accesorio</option>
+                        <option value="bici">Bicicleta</option>
+                        <option value="repuesto">Repuesto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdName">Nombre del Producto:</label>
+                    <input type="text" id="editProdName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdCantidad">Cantidad Comprada:</label>
+                    <input type="number" id="editProdCantidad" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProdCosto">Costo Total ($):</label>
+                    <input type="number" step="0.01" id="editProdCosto" required>
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="Btn_actualizarProd">🔄 Actualizar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!----------------------------------------------------------------------------------------->
+    <!--          --- REPARACION ---                            -->
+
+    <!-- CONTENEDOR PARA AGREGAR NUEVA REPARACION-->
+
+    <div id="seccionFacturaReparacion" class="factura-container oculto">
+        <div class="factura-header">
+            <h2>🧾 ORDEN DE TRABAJO / REPARACIÓN</h2>
+            <p class="factura-sub">Complete los datos para ingresar el reingreso al taller</p>
+        </div>
+        <hr>
+
+        <form id="formNuevaReparacion" class="factura-body">
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>📅 Fecha de Ingreso:</label>
+                    <input type="date" id="repaFecha" required>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>👤 Cliente Responsable:</label>
+                    <select id="repaCliente" required>
+                        <option value="" disabled selected>-- Seleccionar Cliente --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>🔧 Tipo de Reparación:</label>
+                    <input type="text" id="repaTipo" list="reparacionesSugeridas"
+                        placeholder="Ej: Service Completo o escriba..." required>
+                    <datalist id="reparacionesSugeridas">
+                        <option value="Service Completo"></option>
+                        <option value="Centrado de Llanta"></option>
+                        <option value="Cambio de Cámara/Cubierta"></option>
+                        <option value="Regulación de Cambios/Frenos"></option>
+                    </datalist>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>🚲 Bicicleta (Modelo/Color):</label>
+                    <input type="text" id="repaBici" placeholder="Ej: Venzo Talon R29 Negra" required>
+                </div>
+            </div>
+
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>💰 Costo Total Cobrado ($):</label>
+                    <input type="number" step="0.01" id="repaCosto" placeholder="0.00" required>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>💳 Estado del Pago:</label>
+                    <select id="repaEstadoPago" required>
+                        <option value="" disabled selected>-- Elegir Estado --</option>
+                        <option value="Pendiente">❌ Pendiente</option>
+                        <option value="Pagado">✅ Pagado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="factura-botones">
+                <button type="button" id="btnCancelarReparacion" class="btn-cancelar">❌ Cancelar</button>
+                <button type="submit" class="btn-cargar">💾 Cargar Registro</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <!-- MODAL EDITAR DE LA TABLA REPARACIONES -->
+
+    <div id="modalEditarRepa" class="modal-overlay oculto">
+        <div class="modal-content">
+            <span class="btn-cerrarE_Repa">&times;</span>
+
+            <h2>EDITAR REGISTRO REPARACIÓN</h2>
+            <hr>
+
+            <form id="formEditarRepa">
+                <input type="hidden" id="editRepaId">
+
+                <div class="form-row-modal">
+                    <div class="form-group">
+                        <label for="editRepaFecha">Fecha de Ingreso:</label>
+                        <input type="date" id="editRepaFecha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editRepaCliente">Cliente Responsable:</label>
+                        <select id="editRepaCliente" required>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row-modal">
+                    <div class="form-group">
+                        <label for="editRepaTipo">Tipo de Reparación:</label>
+                        <select id="editRepaTipo" required>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editRepaBici">Bicicleta (Modelo/Color):</label>
+                        <input type="text" id="editRepaBici" required>
+                    </div>
+                </div>
+
+                <div class="form-row-modal">
+                    <div class="form-group">
+                        <label for="editRepaCosto">Costo Cobrado ($):</label>
+                        <input type="number" step="0.01" id="editRepaCosto" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editRepaEstadoPago">Estado del Pago:</label>
+                        <select id="editRepaEstadoPago" required>
+                            <option value="Pendiente">❌ Pendiente</option>
+                            <option value="Pagado">✅ Pagado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-acciones">
+                    <button type="submit" class="Btn_actualizarRepa">💾 Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-------------------------------------------------------------->
+    <!--  MODAL PARA REGISTRAR NUEVA VENTA  -->
+    <div id="seccionFacturaVenta" class="factura-container oculto">
+        <div class="factura-header">
+            <h2>🧾 COMPROBANTE DE VENTA / SALIDA DE STOCK</h2>
+            <p class="factura-sub">Registre la venta de bicicletas o accesorios para actualizar el inventario</p>
+        </div>
+        <hr>
+
+        <form id="formNuevaVenta" class="factura-body">
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>📅 Fecha de Venta:</label>
+                    <input type="date" id="ventaFecha" required>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>👤 Cliente Comprador:</label>
+                    <select id="ventaCliente" required>
+                        <option value="" disabled selected>-- Seleccionar Cliente --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>🏷️ Tipo de Compra (Categoría):</label>
+                    <select id="ventaTipoCompra" required>
+                        <option value="" disabled selected>-- Seleccionar Tipo --</option>
+                        <option value="Bicicletas">Bicicleta</option>
+                        <option value="Accesorios">Accesorio</option>
+                    </select>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>📦 Producto Solicitado:</label>
+                    <select id="ventaProducto" required>
+                        <option value="" disabled selected>-- Primero elija Tipo de Compra --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>🔢 Cantidad Vendida:</label>
+                    <input type="number" id="ventaCantidad" min="1" placeholder="Ej: 2" required>
+                </div>
+
+                <div class="form-group-factura">
+                    <label>💰 Total Cobrado ($):</label>
+                    <input type="number" step="0.01" id="ventaTotal" placeholder="0.00" required>
+                </div>
+            </div>
+
+            <div class="factura-row">
+                <div class="form-group-factura">
+                    <label>💳 Estado del Pago:</label>
+                    <select id="ventaEstadoPago" required>
+                        <option value="Pendiente" selected>❌ Pendiente</option>
+                        <option value="Pagada">✅ Pagada</option>
+                    </select>
+                </div>
+                <div class="form-group-factura"></div>
+            </div>
+
+            <div class="factura-botones">
+                <button type="button" id="btnCancelarVenta" class="btn-cancelar">❌ Cancelar</button>
+                <button type="submit" class="btn-cargar">💾 Guardar Venta</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+    <!---------- MODAL EDITAR VENTAS-->
+
+    <div id="modalEditarVenta" class="modal oculto">
+        <div class="modal-contenido factura-container">
+            <div class="factura-header">
+                <button id="btnCerrarModalVentaX" class="btn-cerrar-x">&times;</button>
+
+                <h2>EDITAR COMPROBANTE DE VENTA</h2>
+            </div>
+            <hr>
+
+            <form id="formEditarVenta" class="factura-body">
+                <input type="hidden" id="editVentaId">
+                <input type="hidden" id="editVentaProductoId">
+
+                <div class="factura-row">
+                    <div class="form-group-factura">
+                        <label>👤 Cliente Comprador:</label>
+                        <p id="textVentaCliente"
+                            style="font-weight: bold; margin: 5px 0; padding: 8px; background: #f5f5f5; border-radius: 4px;">
+                        </p>
+                    </div>
+                    <div class="form-group-factura">
+                        <label>📦 Producto Vendido:</label>
+                        <p id="textVentaProducto"
+                            style="font-weight: bold; margin: 5px 0; padding: 8px; background: #f5f5f5; border-radius: 4px;">
+                        </p>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px dashed #ccc; margin: 15px 0;">
+
+                <div class="factura-row">
+                    <div class="form-group-factura">
+                        <label>📅 Fecha de Venta:</label>
+                        <input type="date" id="editVentaFecha" required>
+                    </div>
+                    <div class="form-group-factura">
+                        <label>🔢 Cantidad Vendida:</label>
+                        <input type="number" id="editVentaCantidad" min="1" placeholder="Ej: 2" required>
+                    </div>
+                </div>
+
+                <div class="factura-row">
+                    <div class="form-group-factura">
+                        <label>💰 Total Cobrado ($):</label>
+                        <input type="number" step="0.01" id="editVentaTotal" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group-factura">
+                        <label>💳 Estado del Pago:</label>
+                        <select id="editVentaEstadoPago" required>
+                            <option value="Pendiente">❌ Pendiente</option>
+                            <option value="Pagada">✅ Pagada</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="factura-botones">
+                    <button type="submit" class="btn-cargar">🔄 Actualizar Venta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+    <!-------------------------------------------------------------------->
+
+    <!---------------------------------- EXTA -->
+    <!-- MODAL PARA AGREGAR INFO EXTRA -->
+
+    <div id="modalExtraReparacion" class="modal oculto">
+        <div class="modal-contenido factura-container" style="max-width: 600px;">
+            <div class="factura-header">
+
+                <button id="btnCerrarModalExtraX" class="btn-cerrar-x">&times;</button>
+
+                <h2>➕ REGISTRAR REPUESTOS UTILIZADOS</h2>
+            </div>
+            <hr>
+
+            <div class="factura-body">
+                <input type="hidden" id="selectExtraReparacionId">
+
+                <div class="factura-row">
+                    <div class="form-group-factura">
+                        <label>📦 Repuesto:</label>
+                        <select id="selectExtraProductoId">
+                        </select>
+                    </div>
+                    <div class="form-group-factura" style="flex: 1;">
+                        <label>📅 Fecha:</label>
+                        <input type="date" id="inputExtraFecha">
+                    </div>
+                    <div class="form-group-factura">
+                        <label>🔢 Cantidad Utilizada:</label>
+                        <input type="number" id="inputExtraCantidad" min="1" value="1">
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-bottom: 15px;">
+                    <button type="button" id="btnAgregarRepuestoLista" class="btn-principal"
+                        style="padding: 6px 12px; font-size: 0.9rem;">
+                        📥 Añadir a la Lista
+                    </button>
+                </div>
+
+                <label>📋 Lista de repuestos a descontar para esta reparación:</label>
+                <div
+                    style="max-height: 150px; overflow-y: auto; border: 1px solid #ccc; margin: 5px 0; border-radius: 4px; background: #fafafa;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                        <thead>
+                            <tr style="background: #eef; text-align: left;">
+                                <th style="padding: 6px;">Repuesto</th>
+                                <th style="padding: 6px;">Cantidad</th>
+                                <th style="padding: 6px; text-align: center;">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoListaExtrasTemporal">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="factura-botones" style="margin-top: 20px;">
+                    <button type="button" id="btnGuardarExtrasFinal" class="btn-cargar">💾 Guardar Cambios en Base de
+                        Datos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+    <!----------------------------------------------------------------------------------------->
+
+    <script src="script.js"></script>
+    <script src="movil.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+</body>
+
+</html>
