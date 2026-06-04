@@ -77,7 +77,7 @@ async function cargarPapeleraGenerica(nombreTabla, titulosColumnas) {
 
     try {
         // 🌟 REEMPLAZADO: Ya no hay "sufijo" con ifs. Va directo al manual:
-        const respuesta = await fetch(`http://localhost:3000/api/${config.rutaApi}/${config.rutaListar}`);
+        const respuesta = await fetch(`/api/${config.rutaApi}/${config.rutaListar}`);
         const registros = await respuesta.json();
 
         if (respuesta.ok) {
@@ -145,7 +145,7 @@ async function restaurarRegistro(id, nombreTabla) {
 
     try {
         // 🌟 Usa config.rutaRestaurar de forma automática
-        const respuesta = await fetch(`http://localhost:3000/api/${config.rutaApi}/${config.rutaRestaurar}/${id}`, {
+        const respuesta = await fetch(`/api/${config.rutaApi}/${config.rutaRestaurar}/${id}`, {
             method: 'PUT'
         });
         const resultado = await respuesta.json();
@@ -191,7 +191,7 @@ async function eliminarRegistroDefinitivo(id, nombreTabla) {
 
     try {
         // 2. Fetch genérico
-        const respuesta = await fetch(`http://localhost:3000/api/${config.rutaApi}/${config.rutaBorrarDef}/${id}`, {
+        const respuesta = await fetch(`/api/${config.rutaApi}/${config.rutaBorrarDef}/${id}`, {
             method: 'DELETE'
         });
         
