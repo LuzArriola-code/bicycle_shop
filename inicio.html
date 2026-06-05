@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="diseño.css">
     <link rel="stylesheet" href="mensaje.css">
     <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
@@ -14,9 +14,10 @@
 <body>
 
 
-    <div id="miMensaje" style="display:none; position:fixed; top:10px; right:10px; z-index:999999; background:red; color:white; padding:20px; font-size:20px; border-radius:10px;">
-    <span id="textoMensaje"></span>
-</div>
+    <div id="miMensaje"
+        style="display:none; position:fixed; top:10px; right:10px; z-index:999999; background:red; color:white; padding:20px; font-size:20px; border-radius:10px;">
+        <span id="textoMensaje"></span>
+    </div>
 
     <!------------------------------------------------------>
     <!--                    MOVILES                        -->
@@ -25,10 +26,11 @@
         🡆</button> -->
 
     <button class="btn-toggle-movil" onclick="toggleMenuMovil()" id="btnMenuMovil">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-</button>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+    </button>
 
     <!------------------------------------------------------>
     <!--                    ESCRITORIO                      -->
@@ -817,6 +819,7 @@
                         <thead>
                             <tr style="background: #eef; text-align: left;">
                                 <th style="padding: 6px;">Repuesto</th>
+                                <th style="padding: 6px;">Fecha</th>
                                 <th style="padding: 6px;">Cantidad</th>
                                 <th style="padding: 6px; text-align: center;">Acción</th>
                             </tr>
@@ -835,7 +838,7 @@
     </div>
 
 
-   
+
     <!----------------------------------------------------------------------------------------->
 
     <script src="script.js"></script>

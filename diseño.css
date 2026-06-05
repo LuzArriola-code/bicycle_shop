@@ -1093,50 +1093,48 @@ summary:hover {
     }
 } */
 
-/* --- RESPONSIVE MÓVIL --- */
+/* --- RESPONSIVE MÓVIL MEJORADO --- */
 @media (max-width: 768px) {
     #seccionFacturaReparacion, #seccionFacturaVenta {
-        /* Sacamos el fixed absoluto que rompe todo */
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        transform: none !important; /* Eliminamos el translate */
+        /* Mantenemos tu base pero ajustamos el espacio */
+        position: fixed !important; 
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
         
-        /* Centramos con flexbox el contenedor para que el modal flote */
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0,0,0,0.5); /* Fondo oscuro detrás */
-        padding: 10px;
+        width: 90% !important;
+        max-width: 350px !important; /* Un poquito más ancho para que no quede tan apretado */
+        padding: 20px !important;    /* Más aire interno */
         box-sizing: border-box;
-        overflow-y: auto; /* IMPORTANTE: esto permite hacer scroll si el modal es largo */
-    }
-
-    /* El modal interior debe ser el que tiene el ancho y el padding */
-    .modal-contenido { /* Asegurate de que tus modales tengan esta clase o envolvelos en un div */
-        width: 100% !important;
-        max-width: 400px !important;
-        background: white;
-        padding: 20px !important;
-        border-radius: 8px;
-        max-height: 90vh; /* Para que no se salga de la pantalla */
-        overflow-y: auto;
+        
+        /* Esto evita que se desborde si el contenido es largo */
+        max-height: 85vh !important; 
+        overflow-y: auto !important;
+        border-radius: 12px !important; /* Bordes redondeados más modernos */
     }
     
+    /* Ajuste de títulos */
     #seccionFacturaReparacion h2, #seccionFacturaVenta h2 {
-        font-size: 1.1rem !important; /* Un poquito más grande para leer bien */
-        margin-top: 0;
+        font-size: 1rem !important;
+        margin-bottom: 15px !important; /* Separación real con el primer input */
+        line-height: 1.2;
     }
     
-    /* Inputs amigables para el dedo */
+    /* El truco para que no se pisen: márgenes y bloques */
     #seccionFacturaReparacion input, #seccionFacturaVenta input,
     #seccionFacturaReparacion select, #seccionFacturaVenta select {
-        font-size: 16px !important; /* Evita que el iPhone haga zoom automático al tocar el input */
-        padding: 12px !important;
+        font-size: 16px !important;
+        padding: 10px !important;
         width: 100% !important;
-        margin-bottom: 10px;
+        margin-bottom: 12px !important; /* Espacio entre cada campo */
+        display: block !important;       /* Obliga a que cada campo vaya abajo del otro */
+    }
+
+    /* Si tenés etiquetas (label), dales espacio también */
+    #seccionFacturaReparacion label, #seccionFacturaVenta label {
+        display: block !important;
+        margin-bottom: 4px !important;
+        font-size: 0.85rem !important;
     }
 }
 

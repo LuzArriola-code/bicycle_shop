@@ -2999,14 +2999,16 @@ function dibujarListaTemporal() {
     const fechaVisual = `${dia}/${mes}/${anio}`;
 
     const fila = document.createElement("tr");
-    fila.innerHTML = `
-            <td style="padding: 6px; border-bottom: 1px solid #eee;">${item.nombre}</td>
-            <td style="padding: 6px; border-bottom: 1px solid #eee;">${fechaVisual}</td>
-            <td style="padding: 6px; border-bottom: 1px solid #eee;"><strong>${item.cantidad_Extra} u.</strong></td>
-            <td style="padding: 6px; border-bottom: 1px solid #eee; text-align:center;">
-                <button type="button" class="btn-cancelar" style="padding:2px 6px; font-size:0.8rem; margin:0;" onclick="eliminarItemTemporal(${index})">❌</button>
-            </td>
-        `;
+   
+    // ... dentro de tu función dibujarListaTemporal
+fila.innerHTML = `
+    <td style="padding: 6px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+    <td style="padding: 6px; border-bottom: 1px solid #eee;">${fechaVisual}</td>
+    <td style="padding: 6px; border-bottom: 1px solid #eee;"><strong>${item.cantidad_Extra} u.</strong></td>
+    <td style="padding: 6px; border-bottom: 1px solid #eee; text-align:center;">
+        <button type="button" class="btn-cancelar" style="padding:2px 6px; font-size:0.8rem; margin:0;" onclick="eliminarItemTemporal(${index})">❌</button>
+    </td>
+`; 
     cuerpoListaExtrasTemporal.appendChild(fila);
   });
 }
