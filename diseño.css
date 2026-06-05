@@ -182,28 +182,11 @@ summary:hover {
 /*----------------------------------------------------------------------------*/
 
 /* --- ESCRITORIO (Por defecto) --- */
+
+
 /* Ocultamos el botón móvil, dejamos que el menú móvil exista pero oculto */
-/* .btn-toggle-movil svg{
+.btn-toggle-movil {
     display: none;
-    pointer-events: none;
-} */
-
-
-
-
-/* EL SVG (ESTO ELIMINA LA X) */
-.btn-toggle-movil svg {
-    display: block !important;
-    pointer-events: none !important;
-    width: 25px !important;
-    height: 25px !important;
-    stroke: white !important; /* Fuerza el color blanco para que se vea */
-    fill: none !important;
-}
-
-/* LA ROTACIÓN */
-.btn-toggle-movil svg.rotar {
-    transform: rotate(180deg);
 }
 
 
@@ -251,12 +234,14 @@ summary:hover {
 
 
     /* BOTÓN FLECHA */
-    /* .btn-toggle-movil {
+   
 
-        display: flex; 
-        display: block !important;
-pointer-events: auto !important; 
-z-index: 99999 !important;      
+
+    /* BOTÓN FLECHA */
+    .btn-toggle-movil {
+
+        display: flex;
+
         align-items: center;
         justify-content: center;
 
@@ -282,32 +267,10 @@ z-index: 99999 !important;
         cursor: pointer;
 
         transition: 0.3s;
-
-        stroke: white !important;
-        
-        stroke-width: 3px !important;
-        fill: none !important;
-    } */
+    }
 
 
-/* EL BOTÓN */
-.btn-toggle-movil {
-    display: flex !important; /* CAMBIADO: Necesitas flex para centrar el icono */
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    z-index: 11000 !important;
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 12px;
-    background: #1a4d4a;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
+
 
     /* MAIN */
     #main-content {

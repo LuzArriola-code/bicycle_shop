@@ -5,18 +5,8 @@ if (!localStorage.getItem("usuarioLogueado")) {
 
 
 
-//-----------------------------------------------------------------------------
 
-function toggleMenuMovil() {
-    const menu = document.getElementById('menuPrincipal');
-    const icono = document.getElementById('iconoFlecha'); // TIENE QUE COINCIDIR CON EL ID DEL HTML
 
-    // Abre el menú
-    menu.classList.toggle('abierto');
-    
-    // Rota el icono
-    icono.classList.toggle('rotar');
-}
 //----------------------------------------------------------------------------------
 
 // ==========================================
