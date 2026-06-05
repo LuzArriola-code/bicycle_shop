@@ -21,7 +21,7 @@ body {
     /* Cambié height por min-height */
     width: 100vw;
 
-      
+
 }
 
 
@@ -183,9 +183,18 @@ summary:hover {
 
 /* --- ESCRITORIO (Por defecto) --- */
 /* Ocultamos el botón móvil, dejamos que el menú móvil exista pero oculto */
-.btn-toggle-movil svg{
+/* .btn-toggle-movil svg{
     display: none;
-    pointer-events: none; /* Esto evita que el clic le pegue al SVG en vez de al botón */
+    pointer-events: none;
+} */
+
+.btn-toggle-movil svg {
+    display: block;
+    /* IMPORTANTE: Esto hace que se vea */
+    pointer-events: none;
+    /* Esto permite el clic */
+    width: 20px;
+    height: 20px;
 }
 
 
@@ -235,7 +244,9 @@ summary:hover {
     /* BOTÓN FLECHA */
     .btn-toggle-movil {
 
-        display: flex;
+        /* display: flex; */
+        display: block !important;
+        pointer-events: none;
 
         align-items: center;
         justify-content: center;
@@ -262,6 +273,11 @@ summary:hover {
         cursor: pointer;
 
         transition: 0.3s;
+
+        stroke: white !important;
+        /* OBLIGATORIO: Para que la flecha sea blanca */
+        stroke-width: 3px !important;
+        fill: none !important;
     }
 
     /* MAIN */
@@ -475,7 +491,7 @@ summary:hover {
 /*-----------------------------------------------------------------*/
 
 /* FONDO OSCURO + EFECTO BORROSO */
-.modal-overlay{
+.modal-overlay {
 
     position: fixed;
 
@@ -485,7 +501,7 @@ summary:hover {
     width: 100%;
     height: 100%;
 
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
 
     backdrop-filter: blur(4px);
 
@@ -505,7 +521,7 @@ summary:hover {
 
 
 /* OCULTAR MODAL */
-.oculto{
+.oculto {
 
     display: none;
 }
@@ -515,7 +531,7 @@ summary:hover {
 /*                    CAJA DEL MODAL                               */
 /*-----------------------------------------------------------------*/
 
-.modal-content{
+.modal-content {
 
     width: 100%;
 
@@ -533,7 +549,7 @@ summary:hover {
 
     box-sizing: border-box;
 
-    box-shadow: 0 10px 35px rgba(0,0,0,0.30);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.30);
 
     animation: aparecerModal 0.25s ease;
 
@@ -545,16 +561,16 @@ summary:hover {
 /*                       ANIMACIÓN                                 */
 /*-----------------------------------------------------------------*/
 
-@keyframes aparecerModal{
+@keyframes aparecerModal {
 
-    from{
+    from {
 
         opacity: 0;
 
         transform: scale(0.92);
     }
 
-    to{
+    to {
 
         opacity: 1;
 
@@ -567,7 +583,7 @@ summary:hover {
 /*                         TITULOS                                 */
 /*-----------------------------------------------------------------*/
 
-.modal-content h2{
+.modal-content h2 {
 
     margin: 0;
 
@@ -581,7 +597,7 @@ summary:hover {
 }
 
 
-.modal-content hr{
+.modal-content hr {
 
     border: none;
 
@@ -602,7 +618,7 @@ summary:hover {
 .btn-cerrarE_Prov,
 .btn-cerrarECliente,
 .btn-cerrarN_Prod,
-.btn-cerrarE_Prod{
+.btn-cerrarE_Prod {
 
     position: absolute;
 
@@ -624,7 +640,7 @@ summary:hover {
 .btn-cerrarE_Prov:hover,
 .btn-cerrarECliente:hover,
 .btn-cerrarN_Prod:hover,
-.btn-cerrarE_Prod:hover{
+.btn-cerrarE_Prod:hover {
 
     color: #000;
 
@@ -636,7 +652,7 @@ summary:hover {
 /*                         FORMULARIOS                             */
 /*-----------------------------------------------------------------*/
 
-.form-group{
+.form-group {
 
     display: flex;
 
@@ -646,7 +662,7 @@ summary:hover {
 }
 
 
-.form-group label{
+.form-group label {
 
     margin-bottom: 6px;
 
@@ -659,7 +675,7 @@ summary:hover {
 
 
 .form-group input,
-.form-group select{
+.form-group select {
 
     width: 100%;
 
@@ -680,11 +696,11 @@ summary:hover {
 
 /* EFECTO INPUT */
 .form-group input:focus,
-.form-group select:focus{
+.form-group select:focus {
 
     border-color: var(--teal-profundo);
 
-    box-shadow: 0 0 0 3px rgba(26,77,74,0.15);
+    box-shadow: 0 0 0 3px rgba(26, 77, 74, 0.15);
 }
 
 
@@ -692,13 +708,13 @@ summary:hover {
 /*                        BOTONES                                  */
 /*-----------------------------------------------------------------*/
 
-.form-acciones{
+.form-acciones {
 
     margin-top: 20px;
 }
 
 
-.form-acciones button{
+.form-acciones button {
 
     width: 100%;
 
@@ -723,7 +739,7 @@ summary:hover {
 
 
 /* HOVER BOTONES */
-.form-acciones button:hover{
+.form-acciones button:hover {
 
     transform: translateY(-1px);
 
@@ -735,9 +751,9 @@ summary:hover {
 /*                    RESPONSIVE MÓVIL                             */
 /*-----------------------------------------------------------------*/
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
 
-    .modal-overlay{
+    .modal-overlay {
 
         padding: 10px;
 
@@ -747,34 +763,34 @@ summary:hover {
     }
 
 
-    .modal-content{
+    .modal-content {
 
-    margin-top: 70px;
+        margin-top: 70px;
 
-    width: 92%;
+        width: 92%;
 
-    max-width: 340px;
+        max-width: 340px;
 
-    border-radius: 14px;
+        border-radius: 14px;
 
-    padding: 14px;
+        padding: 14px;
     }
 
 
-    .modal-content h2{
+    .modal-content h2 {
 
         font-size: 1.1rem;
     }
 
 
-    .form-group label{
+    .form-group label {
 
         font-size: 0.82rem;
     }
 
 
     .form-group input,
-    .form-group select{
+    .form-group select {
 
         padding: 10px;
 
@@ -782,11 +798,11 @@ summary:hover {
     }
 
 
-    .form-acciones button{
+    .form-acciones button {
 
-       padding: 9px;
+        padding: 9px;
 
-    font-size: 0.74rem;
+        font-size: 0.74rem;
     }
 
 
@@ -795,7 +811,7 @@ summary:hover {
     .btn-cerrarE_Prov,
     .btn-cerrarECliente,
     .btn-cerrarN_Prod,
-    .btn-cerrarE_Prod{
+    .btn-cerrarE_Prod {
 
         font-size: 1.5rem;
     }
@@ -832,7 +848,7 @@ summary:hover {
     background: #ffffff;
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
     position: relative;
     max-height: 80vh;
     overflow-y: auto;
@@ -872,25 +888,30 @@ summary:hover {
 #modalEditarVenta h2,
 #modalExtraReparacion h2 {
     margin: 0 40px 20px 0;
-    color: #1a4d4a; /* Teal profundo */
+    color: #1a4d4a;
+    /* Teal profundo */
     font-size: 1.5rem;
     font-weight: 800;
     text-align: left;
 }
 
 /* 5. Inputs y Formularios (Diseño limpio) */
-#modalEditarVenta input, #modalEditarVenta select,
-#modalExtraReparacion input, #modalExtraReparacion select {
+#modalEditarVenta input,
+#modalEditarVenta select,
+#modalExtraReparacion input,
+#modalExtraReparacion select {
     width: 100%;
     padding: 8px 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    box-sizing: border-box; /* OBLIGATORIO: para que el padding no estire el input */
+    box-sizing: border-box;
+    /* OBLIGATORIO: para que el padding no estire el input */
     transition: border-color 0.3s;
 }
 
-#modalEditarVenta input:focus, #modalExtraReparacion input:focus {
+#modalEditarVenta input:focus,
+#modalExtraReparacion input:focus {
     border-color: #1a4d4a;
     outline: none;
 }
@@ -904,16 +925,19 @@ summary:hover {
 
 /* Como no tienes la clase .form-group-factura en el CSS, 
    vamos a definir el comportamiento de los hijos directos de factura-row */
-.factura-row > div {
-    flex: 1; /* Esto hace que se repartan el espacio equitativamente */
-    min-width: 0; /* Evita que se vuelvan microscópicos */
+.factura-row>div {
+    flex: 1;
+    /* Esto hace que se repartan el espacio equitativamente */
+    min-width: 0;
+    /* Evita que se vuelvan microscópicos */
 }
 
 /* Ajuste de padding para que los inputs respiren */
 .factura-body {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Crea espacio entre los grupos de inputs y el resto de elementos */
+    gap: 15px;
+    /* Crea espacio entre los grupos de inputs y el resto de elementos */
     margin-top: 15px;
 }
 
@@ -931,41 +955,49 @@ summary:hover {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     margin-top: 10px;
-    box-shadow: 0 4px 15px rgba(26,77,74,0.3);
+    box-shadow: 0 4px 15px rgba(26, 77, 74, 0.3);
 }
 
 #modalEditarVenta .btn-cargar:hover,
 #modalExtraReparacion .btn-cargar:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(26,77,74,0.4);
+    box-shadow: 0 6px 20px rgba(26, 77, 74, 0.4);
 }
 
 /* --- RESPONSIVE AGRESIVO PARA MÓVIL --- */
 
 @media (max-width: 480px) {
+
     /* 1. Fondo */
-    #modalEditarVenta, #modalExtraReparacion {
+    #modalEditarVenta,
+    #modalExtraReparacion {
         padding: 5px !important;
     }
 
     /* 2. Caja del Modal - Ajustada a 320px */
-    #modalEditarVenta .modal-contenido, #modalExtraReparacion .modal-contenido {
+    #modalEditarVenta .modal-contenido,
+    #modalExtraReparacion .modal-contenido {
         width: 100% !important;
-        max-width: 320px !important; /* El punto medio ideal */
-        padding: 12px !important;    /* Ajuste para que se sienta compacto */
+        max-width: 320px !important;
+        /* El punto medio ideal */
+        padding: 12px !important;
+        /* Ajuste para que se sienta compacto */
         border-radius: 12px !important;
         max-height: 80vh !important;
     }
 
     /* 3. Título */
-    #modalEditarVenta h2, #modalExtraReparacion h2 {
+    #modalEditarVenta h2,
+    #modalExtraReparacion h2 {
         font-size: 0.95rem !important;
         margin: 0 25px 8px 0 !important;
     }
 
     /* 4. Inputs - Ligeramente más reducidos */
-    #modalEditarVenta input, #modalEditarVenta select,
-    #modalExtraReparacion input, #modalExtraReparacion select {
+    #modalEditarVenta input,
+    #modalEditarVenta select,
+    #modalExtraReparacion input,
+    #modalExtraReparacion select {
         padding: 6px 8px !important;
         font-size: 12px !important;
         height: 34px !important;
@@ -973,14 +1005,16 @@ summary:hover {
     }
 
     /* 5. Botón Guardar */
-    #modalEditarVenta .btn-cargar, #modalExtraReparacion .btn-cargar {
+    #modalEditarVenta .btn-cargar,
+    #modalExtraReparacion .btn-cargar {
         padding: 8px !important;
         font-size: 0.9rem !important;
         margin-top: 6px !important;
     }
 
     /* 6. Botón X - Ajustado al nuevo tamaño */
-    #modalEditarVenta .btn-cerrar-x, #modalExtraReparacion .btn-cerrar-x {
+    #modalEditarVenta .btn-cerrar-x,
+    #modalExtraReparacion .btn-cerrar-x {
         width: 26px !important;
         height: 26px !important;
         font-size: 14px !important;
@@ -1000,12 +1034,12 @@ summary:hover {
     font-size: 0.9rem !important;
     font-weight: 500;
     cursor: pointer;
-    
+
     /* ESTO ES LO QUE LO HACE CORTO */
-    display: inline-block; 
-    width: auto !important; 
+    display: inline-block;
+    width: auto !important;
     min-width: unset !important;
-    
+
     transition: all 0.15s ease;
 }
 
@@ -1019,9 +1053,9 @@ summary:hover {
 
 /* --- DISEÑO FINAL: BORDE NEGRO, BOTONES RECUPERADOS Y CENTRADO MÓVIL --- */
 
-#seccionFacturaReparacion, 
+#seccionFacturaReparacion,
 #seccionFacturaVenta {
-    display: none; 
+    display: none;
     position: fixed;
     left: calc(50% + 140px);
     top: 50%;
@@ -1031,21 +1065,21 @@ summary:hover {
     max-height: 90vh;
     padding: 20px;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     /* Borde negro solicitado */
-    border: 2px solid #000000 !important; 
+    border: 2px solid #000000 !important;
     z-index: 9999;
     overflow-y: auto;
 }
 
-#seccionFacturaReparacion:not(.oculto), 
+#seccionFacturaReparacion:not(.oculto),
 #seccionFacturaVenta:not(.oculto) {
     display: block !important;
 }
 
 /* --- ESTILOS DE BOTONES RECUPERADOS --- */
 .btn-cargar {
-    background: #1a4d4a !important; 
+    background: #1a4d4a !important;
     color: #fff !important;
     border: none !important;
     padding: 10px !important;
@@ -1056,16 +1090,17 @@ summary:hover {
 }
 
 .btn-cancelar {
-    background: transparent !important; 
-    color: #1a4d4a !important;      
-    border: 2px solid #1a4d4a !important; 
+    background: transparent !important;
+    color: #1a4d4a !important;
+    border: 2px solid #1a4d4a !important;
     padding: 10px !important;
     border-radius: 8px !important;
     width: 50%;
     margin-top: 10px auto;
     font-weight: bold;
     cursor: pointer;
-    display: block;    /* Necesario para que el auto funcione */
+    display: block;
+    /* Necesario para que el auto funcione */
 }
 
 /* --- RESPONSIVE MÓVIL --- */
@@ -1095,43 +1130,55 @@ summary:hover {
 
 /* --- RESPONSIVE MÓVIL MEJORADO --- */
 @media (max-width: 768px) {
-    #seccionFacturaReparacion, #seccionFacturaVenta {
+
+    #seccionFacturaReparacion,
+    #seccionFacturaVenta {
         /* Mantenemos tu base pero ajustamos el espacio */
-        position: fixed !important; 
+        position: fixed !important;
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
-        
+
         width: 90% !important;
-        max-width: 350px !important; /* Un poquito más ancho para que no quede tan apretado */
-        padding: 20px !important;    /* Más aire interno */
+        max-width: 350px !important;
+        /* Un poquito más ancho para que no quede tan apretado */
+        padding: 20px !important;
+        /* Más aire interno */
         box-sizing: border-box;
-        
+
         /* Esto evita que se desborde si el contenido es largo */
-        max-height: 85vh !important; 
+        max-height: 85vh !important;
         overflow-y: auto !important;
-        border-radius: 12px !important; /* Bordes redondeados más modernos */
+        border-radius: 12px !important;
+        /* Bordes redondeados más modernos */
     }
-    
+
     /* Ajuste de títulos */
-    #seccionFacturaReparacion h2, #seccionFacturaVenta h2 {
+    #seccionFacturaReparacion h2,
+    #seccionFacturaVenta h2 {
         font-size: 1rem !important;
-        margin-bottom: 15px !important; /* Separación real con el primer input */
+        margin-bottom: 15px !important;
+        /* Separación real con el primer input */
         line-height: 1.2;
     }
-    
+
     /* El truco para que no se pisen: márgenes y bloques */
-    #seccionFacturaReparacion input, #seccionFacturaVenta input,
-    #seccionFacturaReparacion select, #seccionFacturaVenta select {
+    #seccionFacturaReparacion input,
+    #seccionFacturaVenta input,
+    #seccionFacturaReparacion select,
+    #seccionFacturaVenta select {
         font-size: 16px !important;
         padding: 10px !important;
         width: 100% !important;
-        margin-bottom: 12px !important; /* Espacio entre cada campo */
-        display: block !important;       /* Obliga a que cada campo vaya abajo del otro */
+        margin-bottom: 12px !important;
+        /* Espacio entre cada campo */
+        display: block !important;
+        /* Obliga a que cada campo vaya abajo del otro */
     }
 
     /* Si tenés etiquetas (label), dales espacio también */
-    #seccionFacturaReparacion label, #seccionFacturaVenta label {
+    #seccionFacturaReparacion label,
+    #seccionFacturaVenta label {
         display: block !important;
         margin-bottom: 4px !important;
         font-size: 0.85rem !important;
@@ -1144,7 +1191,8 @@ summary:hover {
 
 /* Contenedor principal compacto */
 #seccionFacturaRepa {
-    padding: 10px; /* Reducimos el espacio interno */
+    padding: 10px;
+    /* Reducimos el espacio interno */
     background: #f9f9f9;
     border-radius: 6px;
     margin-top: 10px;
@@ -1156,11 +1204,12 @@ summary:hover {
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
-    margin-bottom: 20px; /* <--- ESTO ES LO QUE BUSCAS: espacio hacia abajo */
+    margin-bottom: 20px;
+    /* <--- ESTO ES LO QUE BUSCAS: espacio hacia abajo */
 }
 
 /* Ajuste adicional para los elementos internos */
-#controlesFiltro select, 
+#controlesFiltro select,
 #controlesFiltro button {
     padding: 6px 10px;
     font-size: 13px;
@@ -1174,26 +1223,33 @@ summary:hover {
 .btn-cargar {
     background-color: #1a4d4a;
     color: white;
-    padding: 6px 10px;    /* Padding reducido */
-    font-size: 12px;      /* Un poco más pequeño */
+    padding: 6px 10px;
+    /* Padding reducido */
+    font-size: 12px;
+    /* Un poco más pequeño */
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    white-space: nowrap;  /* Evita que el texto salte de línea */
-    flex: 0 0 auto;       /* IMPORTANTE: Esto impide que el botón se estire */
-    width: auto;          /* Se ajusta solo al tamaño del texto + icono */
+    white-space: nowrap;
+    /* Evita que el texto salte de línea */
+    flex: 0 0 auto;
+    /* IMPORTANTE: Esto impide que el botón se estire */
+    width: auto;
+    /* Se ajusta solo al tamaño del texto + icono */
 }
 
 .btn-cargar:hover {
     background-color: #2c7a76;
 }
+
 /* Ajuste para móviles: sigue apilado pero más comprimido */
 @media (max-width: 480px) {
     #controlesFiltro {
         flex-direction: column;
         align-items: stretch;
     }
-    #controlesFiltro select, 
+
+    #controlesFiltro select,
     #controlesFiltro button {
         width: 100%;
         margin-bottom: 5px;
@@ -1221,7 +1277,7 @@ summary:hover {
 }
 
 /* Ajuste de elementos internos para Ventas */
-#controlesFiltroVentas select, 
+#controlesFiltroVentas select,
 #controlesFiltroVentas button {
     padding: 6px 10px;
     font-size: 13px;
@@ -1240,7 +1296,8 @@ summary:hover {
         flex-direction: column;
         align-items: stretch;
     }
-    #controlesFiltroVentas select, 
+
+    #controlesFiltroVentas select,
     #controlesFiltroVentas button {
         width: 100%;
         margin-bottom: 5px;
