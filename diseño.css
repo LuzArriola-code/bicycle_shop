@@ -185,6 +185,7 @@ summary:hover {
 /* Ocultamos el botón móvil, dejamos que el menú móvil exista pero oculto */
 .btn-toggle-movil {
     display: none;
+    pointer-events: none; /* Esto evita que el clic le pegue al SVG en vez de al botón */
 }
 
 
@@ -1068,12 +1069,12 @@ summary:hover {
 }
 
 /* --- RESPONSIVE MÓVIL --- */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     #seccionFacturaReparacion, #seccionFacturaVenta {
-        position: fixed !important; /* Volvemos a fixed para centrar bien */
+        position: fixed !important; 
         left: 50% !important;
         top: 50% !important;
-        transform: translate(-50%, -50%) !important; /* Centrado perfecto */
+        transform: translate(-50%, -50%) !important;
         
         width: 90% !important;
         max-width: 320px !important;
@@ -1089,6 +1090,53 @@ summary:hover {
     #seccionFacturaReparacion select, #seccionFacturaVenta select {
         font-size: 16px !important;
         padding: 8px !important;
+    }
+} */
+
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+    #seccionFacturaReparacion, #seccionFacturaVenta {
+        /* Sacamos el fixed absoluto que rompe todo */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        transform: none !important; /* Eliminamos el translate */
+        
+        /* Centramos con flexbox el contenedor para que el modal flote */
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.5); /* Fondo oscuro detrás */
+        padding: 10px;
+        box-sizing: border-box;
+        overflow-y: auto; /* IMPORTANTE: esto permite hacer scroll si el modal es largo */
+    }
+
+    /* El modal interior debe ser el que tiene el ancho y el padding */
+    .modal-contenido { /* Asegurate de que tus modales tengan esta clase o envolvelos en un div */
+        width: 100% !important;
+        max-width: 400px !important;
+        background: white;
+        padding: 20px !important;
+        border-radius: 8px;
+        max-height: 90vh; /* Para que no se salga de la pantalla */
+        overflow-y: auto;
+    }
+    
+    #seccionFacturaReparacion h2, #seccionFacturaVenta h2 {
+        font-size: 1.1rem !important; /* Un poquito más grande para leer bien */
+        margin-top: 0;
+    }
+    
+    /* Inputs amigables para el dedo */
+    #seccionFacturaReparacion input, #seccionFacturaVenta input,
+    #seccionFacturaReparacion select, #seccionFacturaVenta select {
+        font-size: 16px !important; /* Evita que el iPhone haga zoom automático al tocar el input */
+        padding: 12px !important;
+        width: 100% !important;
+        margin-bottom: 10px;
     }
 }
 

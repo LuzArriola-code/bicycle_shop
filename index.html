@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="diseño.css">
     <link rel="stylesheet" href="mensaje.css">
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
 
 </head>
 
@@ -20,8 +21,14 @@
     <!------------------------------------------------------>
     <!--                    MOVILES                        -->
 
+    <!-- <button class="btn-toggle-movil" onclick="toggleMenuMovil()" id="btnMenuMovil">
+        🡆</button> -->
+
     <button class="btn-toggle-movil" onclick="toggleMenuMovil()" id="btnMenuMovil">
-        🡆</button>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+</button>
 
     <!------------------------------------------------------>
     <!--                    ESCRITORIO                      -->
@@ -64,8 +71,8 @@
                 <button id="btnVerRepa" class="btn-ver">Ver Reparaciones</button>
                 <button id="btnFacR" class="btn-ver">Factura Reparaciones</button>
                 <hr>
-                <button id="btnModalExtraR" class="btn-agregar">Agregar Info Extra</button>
-                <button id="btnVerExtra" class="btn-ver">Ver Extras</button>
+                <button id="btnModalExtraR" class="btn-agregar">Cargar uso</button>
+                <button id="btnVerExtra" class="btn-ver">Ver uso</button>
                 <hr>
                 <button id="btnModalVentas" class="btn-agregar">Nueva Venta</button>
                 <button id="btnVerVenta" class="btn-ver">Ver Ventas</button>
@@ -490,7 +497,7 @@
     <div id="seccionFacturaReparacion" class="factura-container oculto">
         <div class="factura-header">
             <h2>🧾 ORDEN DE TRABAJO / REPARACIÓN</h2>
-            <p class="factura-sub">Complete los datos para ingresar el reingreso al taller</p>
+            <p class="factura-sub">Completá los datos del servicio a realizar</p>
         </div>
         <hr>
 
@@ -624,7 +631,7 @@
     <div id="seccionFacturaVenta" class="factura-container oculto">
         <div class="factura-header">
             <h2>🧾 COMPROBANTE DE VENTA / SALIDA DE STOCK</h2>
-            <p class="factura-sub">Registre la venta de bicicletas o accesorios para actualizar el inventario</p>
+            <p class="factura-sub">Cargá los datos del producto vendido</p>
         </div>
         <hr>
 
