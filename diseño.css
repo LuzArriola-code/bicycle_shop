@@ -191,8 +191,7 @@ summary:hover {
 .btn-toggle-movil svg {
     display: block;
     /* IMPORTANTE: Esto hace que se vea */
-    pointer-events: none;
-    /* Esto permite el clic */
+pointer-events: none !important; /* Esto permite el clic */
     width: 20px;
     height: 20px;
 }
@@ -246,8 +245,8 @@ summary:hover {
 
         /* display: flex; */
         display: block !important;
-        pointer-events: none;
-
+pointer-events: auto !important; /* Asegura que el botón reciba el clic */
+z-index: 99999 !important;      /* Asegura que esté por encima de todo */
         align-items: center;
         justify-content: center;
 
