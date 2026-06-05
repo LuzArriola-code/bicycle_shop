@@ -188,20 +188,24 @@ summary:hover {
     pointer-events: none;
 } */
 
+
+
+
+/* EL SVG (ESTO ELIMINA LA X) */
 .btn-toggle-movil svg {
-    display: block;
-    /* IMPORTANTE: Esto hace que se vea */
-pointer-events: none !important; /* Esto permite el clic */
-    width: 20px;
-    height: 20px;
+    display: block !important;
+    pointer-events: none !important;
+    width: 25px !important;
+    height: 25px !important;
+    stroke: white !important; /* Fuerza el color blanco para que se vea */
+    fill: none !important;
 }
 
-
-/* Clase que aplicaremos con JS para girar la flecha */
+/* LA ROTACIÓN */
 .btn-toggle-movil svg.rotar {
     transform: rotate(180deg);
-    transition: transform 0.3s ease;
 }
+
 
 
 /* El main ocupa el espacio restante al lado del aside */
@@ -247,12 +251,12 @@ pointer-events: none !important; /* Esto permite el clic */
 
 
     /* BOTÓN FLECHA */
-    .btn-toggle-movil {
+    /* .btn-toggle-movil {
 
-        /* display: flex; */
+        display: flex; 
         display: block !important;
-pointer-events: auto !important; /* Asegura que el botón reciba el clic */
-z-index: 99999 !important;      /* Asegura que esté por encima de todo */
+pointer-events: auto !important; 
+z-index: 99999 !important;      
         align-items: center;
         justify-content: center;
 
@@ -280,10 +284,30 @@ z-index: 99999 !important;      /* Asegura que esté por encima de todo */
         transition: 0.3s;
 
         stroke: white !important;
-        /* OBLIGATORIO: Para que la flecha sea blanca */
+        
         stroke-width: 3px !important;
         fill: none !important;
-    }
+    } */
+
+
+/* EL BOTÓN */
+.btn-toggle-movil {
+    display: flex !important; /* CAMBIADO: Necesitas flex para centrar el icono */
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 11000 !important;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: #1a4d4a;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
     /* MAIN */
     #main-content {

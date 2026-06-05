@@ -9,20 +9,14 @@ if (!localStorage.getItem("usuarioLogueado")) {
 
 function toggleMenuMovil() {
     const menu = document.getElementById('menuPrincipal');
-    
-    // Si tu menú tiene la clase 'oculto', se la quitamos para mostrarlo
-    // Si no la tiene, se la ponemos para ocultarlo.
-    // Esto funciona aunque no sepas qué clase específica tiene.
-    menu.classList.toggle('oculto'); 
-    
-    // O si tu CSS lo maneja con display: none directo:
-    if (menu.style.display === "none" || menu.style.display === "") {
-        menu.style.display = "block";
-    } else {
-        menu.style.display = "none";
-    }
-}
+    const icono = document.getElementById('iconoFlecha'); // TIENE QUE COINCIDIR CON EL ID DEL HTML
 
+    // Abre el menú
+    menu.classList.toggle('abierto');
+    
+    // Rota el icono
+    icono.classList.toggle('rotar');
+}
 //----------------------------------------------------------------------------------
 
 // ==========================================
