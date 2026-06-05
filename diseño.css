@@ -183,7 +183,7 @@ summary:hover {
 
 /* --- ESCRITORIO (Por defecto) --- */
 /* Ocultamos el botón móvil, dejamos que el menú móvil exista pero oculto */
-.btn-toggle-movil {
+.btn-toggle-movil svg{
     display: none;
     pointer-events: none; /* Esto evita que el clic le pegue al SVG en vez de al botón */
 }
