@@ -83,7 +83,7 @@ async function procesarLogin(e) {
             localStorage.setItem('usuarioLogueado', JSON.stringify(resultado.usuario));
 
             // REDIRECCIÓN COMPLETA A INDEX
-            window.location.href = 'index.html';
+            window.location.href = 'inicio.html';
         } else {
             // ACCIÓN: Si las credenciales fallan, mostramos el cuadro rojo con el error del backend
             mensajeError.textContent = `❌ ${resultado.error}`;
