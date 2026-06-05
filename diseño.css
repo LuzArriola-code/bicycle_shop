@@ -197,6 +197,12 @@ pointer-events: none !important; /* Esto permite el clic */
 }
 
 
+/* Clase que aplicaremos con JS para girar la flecha */
+.btn-toggle-movil svg.rotar {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
 
 /* El main ocupa el espacio restante al lado del aside */
 #main-content {

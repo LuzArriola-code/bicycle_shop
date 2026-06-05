@@ -3,6 +3,22 @@ if (!localStorage.getItem("usuarioLogueado")) {
   window.location.href = "login.html";
 }
 
+
+
+//-----------------------------------------------------------------------------
+
+function toggleMenuMovil() {
+    // 1. Seleccionamos el menú y el icono
+    const menu = document.getElementById('btnMenuMovil'); // PONÉ ACÁ EL ID REAL DE TU MENÚ
+    const icono = document.getElementById('iconoFlecha');
+    
+    // 2. Abrimos/Cerramos el menú
+    menu.classList.toggle('activo'); // Asumo que 'activo' es la clase que muestra el menú
+    
+    // 3. Rotamos la flecha
+    icono.classList.toggle('rotar');
+}
+
 //----------------------------------------------------------------------------------
 
 // ==========================================
