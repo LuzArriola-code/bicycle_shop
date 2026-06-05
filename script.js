@@ -8,15 +8,19 @@ if (!localStorage.getItem("usuarioLogueado")) {
 //-----------------------------------------------------------------------------
 
 function toggleMenuMovil() {
-    // 1. Seleccionamos el menú y el icono
-    const menu = document.getElementById('btnMenuMovil'); // PONÉ ACÁ EL ID REAL DE TU MENÚ
-    const icono = document.getElementById('iconoFlecha');
+    const menu = document.getElementById('menuPrincipal');
     
-    // 2. Abrimos/Cerramos el menú
-    menu.classList.toggle('activo'); // Asumo que 'activo' es la clase que muestra el menú
+    // Si tu menú tiene la clase 'oculto', se la quitamos para mostrarlo
+    // Si no la tiene, se la ponemos para ocultarlo.
+    // Esto funciona aunque no sepas qué clase específica tiene.
+    menu.classList.toggle('oculto'); 
     
-    // 3. Rotamos la flecha
-    icono.classList.toggle('rotar');
+    // O si tu CSS lo maneja con display: none directo:
+    if (menu.style.display === "none" || menu.style.display === "") {
+        menu.style.display = "block";
+    } else {
+        menu.style.display = "none";
+    }
 }
 
 //----------------------------------------------------------------------------------
