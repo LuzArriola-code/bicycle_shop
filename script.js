@@ -4,7 +4,18 @@ if (!localStorage.getItem("usuarioLogueado")) {
 }
 
 
+//--------------------------------------------------------------------------------
 
+function toggleMenuMovil() {
+    const menu = document.getElementById('menuPrincipal'); // El ID de tu aside
+    const flecha = document.getElementById('flecha-icono');
+
+    // 1. Abrir/Cerrar la barra
+    menu.classList.toggle('abierto'); // Asegúrate que en tu CSS tengas .menu-acordeon.abierto { left: 0; }
+
+    // 2. Girar la flecha
+    flecha.classList.toggle('abierta');
+}
 
 
 //----------------------------------------------------------------------------------
@@ -1281,7 +1292,7 @@ async function obtenerUsuarios() {
                     data-rol="${usuario.rol}">
                 Editar
             </button>                        
-            <button class="btn-borrar" data-id="${usuario.id_Usuario}">Borrar</button>
+            <button class="btn-borrar" data-id="${usuario.id_Usuario}">Quitar</button>
                     </td>
                 `;
         cuerpoTabla.appendChild(fila);
@@ -1523,7 +1534,7 @@ if (respuesta.ok && Array.isArray(proveedores)) {
           (usuarioSesion && usuarioSesion.rol === "Dueño") ||
           usuarioSesion.rol === "Admin"
         ) {
-          accionesHTML += `<button class="btn-borrar-prov" data-id="${proveedor.id_Prove}">Borrar</button>`;
+          accionesHTML += `<button class="btn-borrar-prov" data-id="${proveedor.id_Prove}">Quitar</button>`;
         }
 
         filaProv.innerHTML = `
@@ -1729,7 +1740,7 @@ async function obtenerClientes() {
           (usuarioSesion && usuarioSesion.rol === "Dueño") ||
           usuarioSesion.rol === "Admin"
         ) {
-          accionesHTML += `<button class="btn-borrar-cliente" data-id="${cliente.id_Cliente}">Borrar</button>`;
+          accionesHTML += `<button class="btn-borrar-cliente" data-id="${cliente.id_Cliente}">Quitar</button>`;
         }
 
         // 🌟 CAMBIADO: Ahora sí usamos 'filaCliente' para meter los datos del cliente
@@ -2062,15 +2073,20 @@ async function obtenerProductos() {
           (usuarioSesion && usuarioSesion.rol === "Dueño") ||
           usuarioSesion?.rol === "Admin"
         ) {
-          accionesHTML += ` <button class="btn-borrar-prod" data-id="${producto.id_Producto}">Borrar</button>`;
+          accionesHTML += ` <button class="btn-borrar-prod" data-id="${producto.id_Producto}">Quitar</button>`;
         }
+
+        // --- LÓGICA DE ALERTA DE STOCK ---
+const cantidad = parseInt(producto.cantidad_Prod) || 0;
+const claseAlerta = (cantidad <= 1) ? 'texto-alerta-stock' : '';
+const textoCantidad = (cantidad <= 1) ? `${cantidad} u. ⚠️` : `${cantidad} u.`;
 
         filaProducto.innerHTML = `
                     <td>${producto.fecha}</td>
                     <td><strong>${nombreProv}</strong></td>
                     <td>${tipoTextoLindo}</td>
                     <td>${producto.producto_Name}</td>
-                    <td>${producto.cantidad_Prod} u.</td>
+                    <td class="${claseAlerta}">${textoCantidad}</td>
                     <td>${formatearMoneda(costoNumerico)}</td> 
                     <td>${accionesHTML}</td>
                 `;

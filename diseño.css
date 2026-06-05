@@ -185,10 +185,16 @@ summary:hover {
 
 
 /* Ocultamos el botón móvil, dejamos que el menú móvil exista pero oculto */
-.btn-toggle-movil {
-    display: none;
-}
 
+/* .btn-toggle-movil {
+    display: none;
+} */
+
+
+/* Esto va FUERA del @media */
+.btn-toggle-movil {
+    display: none; /* Se oculta en computadoras */
+}
 
 
 /* El main ocupa el espacio restante al lado del aside */
@@ -238,7 +244,7 @@ summary:hover {
 
 
     /* BOTÓN FLECHA */
-    .btn-toggle-movil {
+    /* .btn-toggle-movil {
 
         display: flex;
 
@@ -267,9 +273,39 @@ summary:hover {
         cursor: pointer;
 
         transition: 0.3s;
+    } */
+
+.btn-toggle-movil {
+        display: flex !important; /* Aparece y se centra */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 11000;
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 12px;
+        background: #1a4d4a;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
     }
 
+    /* El estilo de la flecha que dibujamos con CSS también va aquí dentro */
+    .flecha {
+        width: 10px;
+        height: 10px;
+        border-top: 3px solid white;
+        border-right: 3px solid white;
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+    }
 
+    .flecha.abierta {
+        transform: rotate(-135deg);
+    }
 
 
     /* MAIN */
@@ -1294,4 +1330,15 @@ summary:hover {
         width: 100%;
         margin-bottom: 5px;
     }
+}
+
+
+/*----------------------------------------------------*/
+/*               TABLA PRODUCTOS MENSAJE STOCK         */
+
+.texto-alerta-stock {
+    color: red !important;
+    font-weight: bold;
+    /* Opcional: si querés que tenga un fondito suave */
+    background-color: #fff0f0; 
 }

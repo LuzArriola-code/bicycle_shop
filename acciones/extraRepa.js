@@ -119,7 +119,7 @@ router.get('/listarExtras', async (req, res) => {
 //--------------------------------------------------------------
 
 //---------------------------------------------------
-// RUTA PARA BORRADO DEFINITIVO Y DEVOLUCIÓN DE STOCK
+// RUTA PARA BORRADO DEFINITIVO 
 //---------------------------------------------------
 router.delete('/eliminarExtra/:id', async (req, res) => {
     const idExtra = req.params.id;

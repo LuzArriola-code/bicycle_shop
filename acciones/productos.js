@@ -240,7 +240,7 @@ router.put('/restaurarProd/:id', async (req, res) => {
 
 //---------------------------------------------------
 
-// RUTA PARA ELIMINACIÓN PERMANENTE (BORRAR DEFINITIVO) CLIENTE
+// RUTA PARA ELIMINACIÓN PERMANENTE (BORRAR DEFINITIVO) 
 router.delete('/ProdBorrado/:id', async (req, res) => {
     const id_Producto = req.params.id;
 
