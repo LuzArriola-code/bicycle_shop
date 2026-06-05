@@ -2586,7 +2586,7 @@ document.getElementById("btnDescargarPDF").addEventListener("click", () => {
 
   const finalY = doc.lastAutoTable.finalY + 10;
   doc.setFont("helvetica", "bold");
-  doc.text(`Costo a cobrar total: ${formatearMoneda(total)}`, 14, finalY);
+  doc.text(`Costo a cobrar: ${formatearMoneda(total)}`, 14, finalY);
 
   doc.save("Factura_Reparaciones.pdf");
 });
