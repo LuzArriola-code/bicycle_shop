@@ -143,13 +143,29 @@ router.get('/listarP_Extra', async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('reparacion_Extra')
-            .select('id_Extra, fechaExtra, reparacion_ID, producto_ID, cantidad_Extra, estado')
+            .select(`
+                id_Extra, 
+                fechaExtra, 
+                reparacion_ID, 
+                cantidad_Extra, 
+                producto_ID,
+                productos (producto_Name)
+            `)
             .eq('estado', 1)
             .order('fechaExtra', { ascending: false });
 
         if (error) return res.status(400).json({ error: error.message });
 
-        res.status(200).json(data);
+        // Aplanamos para obtener el nombre del producto
+        const datosAplanados = data.map(e => ({
+            id_Extra: e.id_Extra,
+            fechaExtra: e.fechaExtra,
+            reparacion_ID: e.reparacion_ID,
+            nombre_producto: e.productos ? e.productos.producto_Name : "---",
+            cantidad_Extra: e.cantidad_Extra
+        }));
+
+        res.status(200).json(datosAplanados);
     } catch (err) {
         res.status(500).json({ error: "Error al listar la papelera de extras." });
     }

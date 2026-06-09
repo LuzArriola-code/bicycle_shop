@@ -245,8 +245,6 @@ router.put('/borrarVenta/:id', async (req, res) => {
 //---------------------------------------------------
 router.get('/listarP_Venta', async (req, res) => {
     try {
-        // Hacemos el SELECT apuntando a la tabla 'ventas' con estado 1 (Papelera)
-        // Traemos también las relaciones para que el motor genérico pueda leer los nombres si hace falta
         const { data, error } = await supabase
             .from('ventas')
             .select(`
@@ -256,32 +254,33 @@ router.get('/listarP_Venta', async (req, res) => {
                 cantidad,
                 total_Comprado,
                 estado_Pago,
-                cliente_ID,
-                clientes (
-                    cliente_Name
-                ),
-                produ_ID,
-                productos (
-                    producto_Name
-                )
+                clientes (cliente_Name),
+                productos (producto_Name)
             `)
-            .eq('estado', 1) // 🌟 Solo las inactivas/borradas lógicamente
-            .order('id_Venta', { ascending: true }) 
+            .eq('estado', 1)
+            .order('id_Venta', { ascending: true })
             .order('fecha_Venta', { ascending: true });
 
-        if (error) {
-            return res.status(400).json({ error: error.message });
-        }
+        if (error) return res.status(400).json({ error: error.message });
 
-        // Devolvemos el array de ventas archivadas
-        res.status(200).json(data);
+        // Aplanamos para que el frontend reciba strings directos
+        const datosAplanados = data.map(v => ({
+            id_Venta: v.id_Venta,
+            fecha_Venta: v.fecha_Venta,
+            tipo_Compra: v.tipo_Compra,
+            cantidad: v.cantidad,
+            total_Comprado: v.total_Comprado,
+            estado_Pago: v.estado_Pago,
+            nombre_cliente: v.clientes ? v.clientes.cliente_Name : "---",
+            nombre_producto: v.productos ? v.productos.producto_Name : "---"
+        }));
 
+        res.status(200).json(datosAplanados);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Error interno del servidor al listar la papelera de ventas." });
+        res.status(500).json({ error: "Error al listar ventas." });
     }
 });
-
 
 //---------------------------------------------------
 // RUTA PARA RESTAURAR VENTAS (SACAR DE PAPELERA)

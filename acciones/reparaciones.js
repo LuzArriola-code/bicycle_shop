@@ -172,8 +172,6 @@ router.put('/papeleraRepa/:id', async (req, res) => {
 
 router.get('/listarP_Repa', async (req, res) => {
     try {
-        // Hacemos el SELECT apuntando a la tabla 'reparaciones'
-        // Filtrando donde el estado sea 1 (Papelera)
         const { data, error } = await supabase
             .from('reparaciones')
             .select(`
@@ -184,22 +182,27 @@ router.get('/listarP_Repa', async (req, res) => {
                 costo_Cobrado,
                 estadoPago,
                 ID_cli,
-                clientes (
-                    cliente_Name
-                )
-            `) // 🌟 Traemos las columnas de reparaciones + el JOIN para saber de qué cliente era
+                clientes (cliente_Name)
+            `)
             .eq('estado', 1)
-            .order('fecha_Repa', { ascending: true }); // ASC por fecha
+            .order('fecha_Repa', { ascending: true });
 
-        if (error) {
-            return res.status(400).json({ error: error.message });
-        }
+        if (error) return res.status(400).json({ error: error.message });
 
-        // Devolvemos el array de las reparaciones archivadas
-        res.status(200).json(data);
+        // Aplanamos: convertimos el cliente en un string plano
+        const datosAplanados = data.map(r => ({
+            id_Repa: r.id_Repa,
+            fecha_Repa: r.fecha_Repa,
+            nombre_cliente: r.clientes ? r.clientes.cliente_Name : "---",
+            tipo_Repa: r.tipo_Repa,
+            bici_User: r.bici_User,
+            costo_Cobrado: r.costo_Cobrado,
+            estadoPago: r.estadoPago
+        }));
 
+        res.status(200).json(datosAplanados);
     } catch (err) {
-        res.status(500).json({ error: "Error interno del servidor al listar la papelera de reparaciones." });
+        res.status(500).json({ error: "Error al listar la papelera de reparaciones." });
     }
 });
 

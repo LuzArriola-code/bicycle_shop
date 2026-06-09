@@ -173,10 +173,8 @@ router.put('/papeleraProd/:id', async (req, res) => {
 //---------------------------------------------------
 
 // RUTA PARA TRAER TODOS LOS PRODUCTOS QUE ESTÁN EN LA PAPELERA (ESTADO 1)
-router.get('/listarP_Prod', async (req, res) => { // 🌟 Cambiamos el nombre de la ruta a listarP_Prod
+router.get('/listarP_Prod', async (req, res) => {
     try {
-        // Hacemos el SELECT apuntando a la tabla 'productos'
-        // Filtrando donde el estado sea 1 (Inactivos/Papelera)
         const { data, error } = await supabase
             .from('productos')
             .select(`
@@ -187,22 +185,27 @@ router.get('/listarP_Prod', async (req, res) => { // 🌟 Cambiamos el nombre de
                 cantidad_Prod,
                 costo_Prod,
                 prov_ID,
-                proveedores (
-                    nombre_Completo
-                )
-            `) // 🌟 Traemos todas las columnas necesarias + el JOIN del proveedor
+                proveedores (nombre_Completo)
+            `)
             .eq('estado', 1)
             .order('fecha', { ascending: true });
 
-        if (error) {
-            return res.status(400).json({ error: error.message });
-        }
+        if (error) return res.status(400).json({ error: error.message });
 
-        // Si todo sale bien, devolvemos el array de productos archivados
-        res.status(200).json(data);
+        // Aplanamos los datos
+        const datosAplanados = data.map(p => ({
+            id_Producto: p.id_Producto,
+            fecha: p.fecha,
+            nombre_proveedor: p.proveedores ? p.proveedores.nombre_Completo : "---",
+            tipo_Prod: p.tipo_Prod,
+            producto_Name: p.producto_Name,
+            cantidad_Prod: p.cantidad_Prod,
+            costo_Prod: p.costo_Prod
+        }));
 
+        res.status(200).json(datosAplanados);
     } catch (err) {
-        res.status(500).json({ error: "Error interno del servidor al listar la papelera de productos." });
+        res.status(500).json({ error: "Error interno al listar la papelera de productos." });
     }
 });
 

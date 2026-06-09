@@ -43,79 +43,85 @@ const configuracionTablas = {
     ordenarPor: "cliente_Name", 
     sentido: "asc",
   },
-  productos: {
-    // 🌟 ¡NUEVO BLOQUE COMPLETITO!
+ productos: {
     rutaApi: "productos",
-    rutaListar: "listarP_Prod", // 👈 La ruta que crees en tu backend clientes
-    rutaRestaurar: "restaurarProd", // 👈 La ruta para sacar de papelera
-    rutaBorrarDef: "ProdBorrado", // 👈 La ruta para el delete definitivo
+    rutaListar: "listarP_Prod",
+    rutaRestaurar: "restaurarProd",
+    rutaBorrarDef: "ProdBorrado",
     idColumna: "id_Producto",
     campos: [
       "id_Producto",
       "fecha",
-      "prov_ID",
+      "nombre_proveedor", // <--- Ahora es el nombre, no el ID
       "tipo_Prod",
       "producto_Name",
       "cantidad_Prod",
       "costo_Prod",
     ],
-
-    ordenarPor: "fecha", 
-    sentido: "asc",
-  },
-  reparaciones: {
+    // Ajustado a la nueva estructura de orden
+    ordenarPor: [
+      { campo: "fecha", sentido: "asc" }
+    ]
+},
+reparaciones: {
     rutaApi: "reparaciones",
     rutaListar: "listarP_Repa",
     rutaRestaurar: "restaurarRepa",
     rutaBorrarDef: "RepaBorrado",
     idColumna: "id_Repa",
-    // Corregido: cada columna es un string independiente
     campos: [
       "id_Repa",
       "fecha_Repa",
-      "ID_cli",
+      "nombre_cliente", // <--- Nombre del cliente en lugar del ID
       "tipo_Repa",
       "bici_User",
       "costo_Cobrado",
       "estadoPago",
     ],
-
-     ordenarPor: "fecha_Repa", 
-    sentido: "asc",
-  },
-  ventas: {
+    ordenarPor: [
+      { campo: "fecha_Repa", sentido: "asc" }
+    ]
+},
+ventas: {
     rutaApi: "ventas",
-    rutaListar: "listarP_Venta", // Tu ruta GET para traer las ventas de la DB
-    rutaRestaurar: "restaurarVenta", // La que usará el PUT para volver el estado a 0
-    rutaBorrarDef: "borradoDefinitivoVenta", // La que ejecutará el DELETE físico en Supabase
+    rutaListar: "listarP_Venta",
+    rutaRestaurar: "restaurarVenta",
+    rutaBorrarDef: "borradoDefinitivoVenta",
     idColumna: "id_Venta",
+    // Estos nombres deben coincidir 1:1 con las llaves que creamos en el 'map' del backend
     campos: [
       "id_Venta",
       "fecha_Venta",
+      "nombre_cliente",
       "tipo_Compra",
+      "nombre_producto",
       "cantidad",
       "total_Comprado",
-      "estado_Pago",
-      "cliente_ID",
-      "produ_ID",
+      "estado_Pago"
     ],
-    // Nueva configuración de orden múltiple
     ordenarPor: [
       { campo: "id_Venta", sentido: "asc" },
       { campo: "fecha_Venta", sentido: "asc" }
     ]
-  },
+},
 
-  reparaciones_extra: {
-    rutaApi: "extraRepa", // O la ruta que maneje tus extras
-    rutaListar: "listarP_Extra", // Tu ruta GET para extraer los que tienen estado 1
-    rutaRestaurar: "restaurarExtra", // La ruta para volver estado a 0
-    rutaBorrarDef: "eliminarExtra", // La ruta para el DELETE físico
-    ordenarPor: "fechaExtra", 
-    sentido: "asc",
+ reparaciones_extra: {
+    rutaApi: "extraRepa",
+    rutaListar: "listarP_Extra",
+    rutaRestaurar: "restaurarExtra",
+    rutaBorrarDef: "eliminarExtra",
     idColumna: "id_Extra",
-    campos: ["id_Extra", "fechaExtra", "reparacion_ID", "producto_ID", "cantidad_Extra"]
-  },
+    campos: [
+      "id_Extra", 
+      "fechaExtra", 
+      "reparacion_ID", 
+      "nombre_producto", // <--- Ahora muestra el nombre del producto
+      "cantidad_Extra"
+    ],
+    ordenarPor: [
+      { campo: "fechaExtra", sentido: "desc" }
+    ]
+},
 
 };
 
