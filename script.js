@@ -2344,7 +2344,7 @@ async function obtenerReparaciones() {
           (usuarioSesion && usuarioSesion.rol === "Dueño") ||
           usuarioSesion.rol === "Admin"
         ) {
-          accionesHTML += ` <button class="btn-borrar-repa" data-id="${reparacion.id_Repa}">Borrar</button>`;
+          accionesHTML += ` <button class="btn-borrar-repa" data-id="${reparacion.id_Repa}">Quitar</button>`;
         }
 
         // Inyectamos las celdas
@@ -2851,7 +2851,7 @@ async function obtenerVentas() {
           (usuarioSesion && usuarioSesion.rol === "Dueño") ||
           usuarioSesion.rol === "Admin"
         ) {
-          accionesHTML += ` <button class="btn-borrar-venta" data-id="${venta.id_Venta}">Borrar</button>`;
+          accionesHTML += ` <button class="btn-borrar-venta" data-id="${venta.id_Venta}">Quitar</button>`;
         }
 
         // Inyectamos los datos en las celdas correspondientes
@@ -3152,7 +3152,7 @@ async function obtenerYDibujarExtras() {
       // 🌟 BOTÓN: Ahora llama a la función de borrado lógico
       let botonHTML = (rolUsuario === "dueño" || rolUsuario === "admin") 
         ? `<button class="btn-cancelar" style="padding: 4px 8px; cursor: pointer;" 
-             onclick="borrarExtraLogica(${item.id_Extra})">🗑️ Borrar</button>`
+             onclick="borrarExtraLogica(${item.id_Extra})">Quitar</button>`
         : `<button class="btn-cancelar" style="opacity: 0.35; cursor: not-allowed;" disabled>🗑️ Borrar</button>`;
 
       tablaHTML += `
