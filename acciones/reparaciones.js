@@ -235,26 +235,29 @@ router.put('/restaurarRepa/:id', async (req, res) => {
 });
 
 // =================================================================
-// 3. RUTA PARA ELIMINACIÓN PERMANENTE (BORRAR DEFINITIVO)
-// =================================================================
+// BORRAR REPARACION DEFINITIVAMENTE 
+
 router.delete('/RepaBorrado/:id', async (req, res) => {
     const id_Repa = req.params.id;
 
     try {
-        // 1. PRIMERO: Borramos los hijos (Extras)
-        await supabase.from('reparacion_Extra').delete().eq('reparacion_ID', id_Repa);
-
-        // 2. DESPUÉS: Borramos el padre (Reparación)
-        const { error } = await supabase.from('reparaciones').delete().eq('id_Repa', id_Repa);
+        // 1. Borramos la reparación
+        const { error } = await supabase
+            .from('reparaciones')
+            .delete()
+            .eq('id_Repa', id_Repa);
 
         if (error) return res.status(400).json({ error: error.message });
 
-        res.status(200).json({ mensaje: "Reparación y sus extras eliminados." });
+        // 2. Si quieres que los extras queden "huérfanos" (con reparacion_ID en NULL) 
+        // no haces nada más. Si quieres borrarlos, los borras aquí:
+        await supabase.from('reparacion_Extra').delete().eq('reparacion_ID', id_Repa);
+
+        res.status(200).json({ mensaje: "Reparación eliminada y sus extras asociados también." });
     } catch (err) {
         res.status(500).json({ error: "Error al eliminar." });
     }
 });
-
 //-----------------------------------------------------
 // Exportamos el router para que servidor.js lo pueda leer
 module.exports = router;

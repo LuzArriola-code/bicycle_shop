@@ -266,7 +266,7 @@ router.get('/listarP_Venta', async (req, res) => {
                 )
             `)
             .eq('estado', 1) // 🌟 Solo las inactivas/borradas lógicamente
-              .order('id_Venta', { ascending: true }) 
+            .order('id_Venta', { ascending: true }) 
             .order('fecha_Venta', { ascending: true });
 
         if (error) {
@@ -342,33 +342,29 @@ router.put('/restaurarVenta/:id', async (req, res) => {
 
 //---------------------------------------------------
 // RUTA PARA ELIMINACIÓN PERMANENTE (BORRAR DEFINITIVO) VENTA
-//---------------------------------------------------
+
+
 router.delete('/borradoDefinitivoVenta/:id', async (req, res) => {
     const id_Venta = req.params.id;
 
     try {
-        // Hacemos el DELETE directo y definitivo en la base de datos
-        const { data, error } = await supabase
+        // Al tener SET NULL en las relaciones, esto no afectará a Clientes ni Productos
+        const { error } = await supabase
             .from('ventas')
             .delete()
-            .eq('id_Venta', id_Venta)
-            .select(); // Confirmamos qué registro se borró
+            .eq('id_Venta', id_Venta);
 
         if (error) {
             return res.status(400).json({ error: error.message });
         }
 
-        if (data.length === 0) {
-            return res.status(404).json({ error: "Venta no encontrada en el sistema." });
-        }
-
         res.status(200).json({
-            mensaje: "La Venta ha sido eliminada permanentemente del sistema"
+            mensaje: "La Venta ha sido eliminada permanentemente del sistema."
         });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Error interno del servidor al eliminar definitivamente la venta." });
+        res.status(500).json({ error: "Error interno al eliminar la venta." });
     }
 });
 

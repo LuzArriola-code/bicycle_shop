@@ -3110,13 +3110,12 @@ window.addEventListener("keydown", function (e) {
 });
 
 // Función que va al backend a traer los datos y arma la tabla
+
 async function obtenerYDibujarExtras() {
   try {
     contenedorExtra.innerHTML = `<p style="color: #666; font-style: italic;">Cargando registros...</p>`;
 
-    const respuesta = await fetch(
-      "/api/extraRepa/listarExtras",
-    );
+    const respuesta = await fetch("/api/extraRepa/listarExtras");
     const datos = await respuesta.json();
 
     if (!respuesta.ok) {
@@ -3124,144 +3123,80 @@ async function obtenerYDibujarExtras() {
       return;
     }
 
-    // --- ORDENAMIENTO FORZADO POR FECHA ---
-    if (Array.isArray(datos)) {
-      datos.sort((a, b) => new Date(a.fechaExtra) - new Date(b.fechaExtra));
-    }
-    // --------------------------------------
+    // Filtrar solo los que NO están en papelera (estado 0)
+    const datosActivos = datos.filter(item => item.estado === 0);
 
-    if (datos.length === 0) {
-      contenedorExtra.innerHTML = `<p style="color: #888; font-style: italic; padding: 10px; background: #f9f9f9; border: 1px dashed #ccc; border-radius: 4px;">No hay repuestos extras registrados en el historial.</p>`;
+    if (datosActivos.length === 0) {
+      contenedorExtra.innerHTML = `<p style="color: #888; font-style: italic; padding: 10px; background: #f9f9f9; border: 1px dashed #ccc; border-radius: 4px;">No hay repuestos extras registrados.</p>`;
       return;
     }
 
-    // Armamos la estructura de la tabla con los estilos de tu sistema
     let tablaHTML = `
-            <table class="tabla-general" style="width:100%; border-collapse: collapse; margin-top: 15px;">
-                <thead>
-                    <tr style="background-color: #a2e1db; color: #333; text-align: left;">
-                        <th style="padding: 10px; border: 1px solid #ddd;">📅 Fecha</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">📦 Repuesto / Producto</th>
-                        <th style="padding: 10px; border: 1px solid #ddd;">🔢 Cantidad</th>
-                        <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">⚙️ Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+      <table class="tabla-general" style="width:100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="background-color: #a2e1db; color: #333; text-align: left;">
+                <th style="padding: 10px; border: 1px solid #ddd;">📅 Fecha</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">📦 Repuesto</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">🔢 Cantidad</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">⚙️ Acción</th>
+            </tr>
+        </thead>
+        <tbody>`;
 
-    // Iteramos los datos que vinieron de la DB
-    datos.forEach((item) => {
-      // Formateamos la fecha de YYYY-MM-DD a DD/MM/YYYY para que quede lindo
-      let fechaFormateada = "Sin fecha";
-      if (item.fechaExtra) {
-        const [anio, mes, dia] = item.fechaExtra.split("-");
-        fechaFormateada = `${dia}/${mes}/${anio}`;
-      }
+    const rolUsuario = JSON.parse(localStorage.getItem("usuarioLogueado")).rol.toLowerCase();
 
-      // Sacamos el nombre del producto del objeto anidado que armó el JOIN de Supabase
-      const nombreProducto = item.productos
-        ? item.productos.producto_Name
-        : "Producto no encontrado";
+    datosActivos.forEach((item) => {
+      let fechaFormateada = item.fechaExtra ? item.fechaExtra.split("-").reverse().join("/") : "Sin fecha";
+      const nombreProducto = item.productos ? item.productos.producto_Name : "Producto no encontrado";
 
-      // 🌟 1. OBTENEMOS EL ROL ACTUAL DEL USUARIO DESDE EL LOCALSTORAGE
-      // (Cambiá "rol" por la clave exacta que uses vos en tu login, ej: "user_rol", "tipo_usuario", etc.)
-      // const rolUsuario = localStorage.getItem("usuarioLogueado");
+      // 🌟 BOTÓN: Ahora llama a la función de borrado lógico
+      let botonHTML = (rolUsuario === "dueño" || rolUsuario === "admin") 
+        ? `<button class="btn-cancelar" style="padding: 4px 8px; cursor: pointer;" 
+             onclick="borrarExtraLogica(${item.id_Extra})">🗑️ Borrar</button>`
+        : `<button class="btn-cancelar" style="opacity: 0.35; cursor: not-allowed;" disabled>🗑️ Borrar</button>`;
 
-      const rolUsuario = JSON.parse(
-        localStorage.getItem("usuarioLogueado"),
-      ).rol;
-
-      // 🌟 2. DEFINIMOS LAS VARIABLES DEL BOTÓN SEGÚN EL ROL
-      let botonHTML = "";
-
-      if (rolUsuario === "Dueño" || rolUsuario === "dueño") {
-        // Si es Dueño: Botón completamente operativo con su onclick de siempre
-        botonHTML = `
-                    <button class="btn-cancelar" style="padding: 4px 8px; font-size: 0.85rem; margin: 0; cursor: pointer;" 
-                            onclick="borrarRegistroExtra(${item.id_Extra}, ${item.producto_ID}, ${item.cantidad_Extra})">
-                        🗑️ Borrar
-                    </button>
-                `;
-      } else {
-        // Si NO es Dueño: Le metemos disabled, opacity para que sea transparente y SIN el onclick
-        botonHTML = `
-                    <button class="btn-cancelar" style="padding: 4px 8px; font-size: 0.85rem; margin: 0; opacity: 0.35; cursor: not-allowed;" 
-                            disabled>
-                        🗑️ Borrar
-                    </button>
-                `;
-      }
-
-      // Inyectamos la fila con el botón que corresponda
       tablaHTML += `
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 10px; border: 1px solid #ddd;">${fechaFormateada}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${nombreProducto}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;"><strong>${item.cantidad_Extra} u.</strong></td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
-                        ${botonHTML}
-                    </td>
-                </tr>
-            `;
+        <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 10px; border: 1px solid #ddd;">${fechaFormateada}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;">${nombreProducto}</td>
+            <td style="padding: 10px; border: 1px solid #ddd;"><strong>${item.cantidad_Extra} u.</strong></td>
+            <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${botonHTML}</td>
+        </tr>`;
     });
 
-    tablaHTML += `
-                </tbody>
-            </table>
-        `;
-
-    // Inyectamos la tabla en tu div contenedor
+    tablaHTML += `</tbody></table>`;
     contenedorExtra.innerHTML = tablaHTML;
   } catch (error) {
-    console.error("Error al renderizar la tabla:", error);
-    contenedorExtra.innerHTML = `<p style="color: red;">⚠ Error de red al conectar con el servidor.</p>`;
+    contenedorExtra.innerHTML = `<p style="color: red;">⚠ Error al cargar.</p>`;
   }
 }
 
-// Función global para manejar el borrado DEFINITIVO de la fila
-window.borrarRegistroExtra = async function (idExtra, productoId, cantidad) {
-  // Mensaje de advertencia potente
-  const mensajeAdvertencia =
-    `⚠️ ¡ADVERTENCIA CRÍTICA! ⚠️\n\n` +
-    `¿Estás completamente segura de que querés ELIMINAR PERMANENTEMENTE este registro?\n\n` +
-    `• El registro se borrará definitivamente de la base de datos.\n` +
-    `• Se devolverán ${cantidad} unidad(es) al stock del taller.\n\n` +
-    `Esta acción NO se puede deshacer. ¿Proceder?`;
 
-  if (!confirm(mensajeAdvertencia)) {
-    return; // Si cancela, frena acá
-  }
+
+// Función global para manejar el borrado LOGICAMENTE de la fila
+
+window.borrarExtraLogica = async function (idExtra) {
+  if (!confirm("¿Deseas enviar este registro a la papelera?")) return;
 
   try {
-    // 🌟 ACÁ ESTABA EL ERROR: Cambiamos "PUT" por "DELETE" para que coincida con tu backend
-    const respuesta = await fetch(
-      `/api/extraRepa/eliminarExtra/${idExtra}`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          producto_ID: productoId,
-          cantidad_Extra: cantidad,
-        }),
-      },
-    );
+    // IMPORTANTE: Esta ruta debe actualizar 'estado' a 1 en tu base de datos
+    const respuesta = await fetch(`/api/extraRepa/papeleraExtra/${idExtra}`, {
+      method: "PUT",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ estado: 1 }) 
+    });
 
-    const resultado = await respuesta.json();
-j
     if (respuesta.ok) {
-      mostrarMensaje(
-        "🗑️ Registro borrado por completo del sistema. El stock fue restablecido.",
-      );
-      // Volvemos a dibujar la tabla para que desaparezca la fila borrada
-      obtenerYDibujarExtras();
+      alert("Registro enviado a la papelera.");
+      obtenerYDibujarExtras(); // Refrescar tabla
     } else {
-      mostrarMensaje(`⚠ Error al eliminar: ${resultado.error}`);
+      alert("Error al enviar a papelera.");
     }
   } catch (error) {
-    console.error("Error al borrar:", error);
-    mostrarMensaje("⚠ Error de red al intentar borrar el registro.");
+    console.error(error);
   }
 };
+
 
 //--------------------------------
 // VENTAS

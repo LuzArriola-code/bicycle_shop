@@ -18,6 +18,9 @@ const configuracionTablas = {
     rutaBorrarDef: "usuarioBorrado", // 👈 Su ruta para el DELETE
     idColumna: "id_Usuario",
     campos: ["user_Name", "rol"],
+     ordenarPor: "user_Name", 
+    sentido: "asc",
+
   },
   proveedores: {
     rutaApi: "proveedores",
@@ -26,6 +29,8 @@ const configuracionTablas = {
     rutaBorrarDef: "proveedorBorrado", // 👈 Su ruta para el DELETE
     idColumna: "id_Prove",
     campos: ["nombre_Completo", "telefono", "direccion"],
+    ordenarPor: "nombre_Completo", 
+    sentido: "asc",
   },
   clientes: {
     // 🌟 ¡NUEVO BLOQUE COMPLETITO!
@@ -35,6 +40,8 @@ const configuracionTablas = {
     rutaBorrarDef: "clienteBorrado", // 👈 La ruta para el delete definitivo
     idColumna: "id_Cliente",
     campos: ["cliente_Name", "numero_Telef"],
+    ordenarPor: "cliente_Name", 
+    sentido: "asc",
   },
   productos: {
     // 🌟 ¡NUEVO BLOQUE COMPLETITO!
@@ -52,6 +59,9 @@ const configuracionTablas = {
       "cantidad_Prod",
       "costo_Prod",
     ],
+
+    ordenarPor: "fecha", 
+    sentido: "asc",
   },
   reparaciones: {
     rutaApi: "reparaciones",
@@ -69,6 +79,9 @@ const configuracionTablas = {
       "costo_Cobrado",
       "estadoPago",
     ],
+
+     ordenarPor: "fecha_Repa", 
+    sentido: "asc",
   },
   ventas: {
     rutaApi: "ventas",
@@ -86,7 +99,24 @@ const configuracionTablas = {
       "cliente_ID",
       "produ_ID",
     ],
+    // Nueva configuración de orden múltiple
+    ordenarPor: [
+      { campo: "id_Venta", sentido: "asc" },
+      { campo: "fecha_Venta", sentido: "asc" }
+    ]
   },
+
+  reparaciones_extra: {
+    rutaApi: "extraRepa", // O la ruta que maneje tus extras
+    rutaListar: "listarP_Extra", // Tu ruta GET para extraer los que tienen estado 1
+    rutaRestaurar: "restaurarExtra", // La ruta para volver estado a 0
+    rutaBorrarDef: "eliminarExtra", // La ruta para el DELETE físico
+    ordenarPor: "fechaExtra", 
+    sentido: "asc",
+    idColumna: "id_Extra",
+    campos: ["id_Extra", "fechaExtra", "reparacion_ID", "producto_ID", "cantidad_Extra"]
+  },
+
 };
 
 // ==========================================
@@ -148,7 +178,7 @@ async function cargarPapeleraGenerica(nombreTabla, titulosColumnas) {
         let accionesHTML = `<button class="btn-restaurar" data-id="${idActual}" data-tabla="${nombreTabla}">Restaurar</button>`;
 
         // 1. Definimos qué tablas SÍ pueden borrarse definitivamente
-        const tablasPermitidasBorrado = ["reparaciones", "ventas"];
+        const tablasPermitidasBorrado = ["reparaciones", "ventas", "reparaciones_extra"];
 
         // if (usuarioSesion && usuarioSesion.rol === "Dueño") {
         //     accionesHTML += ` <button class="btn-borrar-definitivo" data-id="${idActual}" data-tabla="${nombreTabla}">Borrar permanente</button>`;
@@ -237,6 +267,13 @@ async function eliminarRegistroDefinitivo(id, nombreTabla) {
       `• Todos los materiales (repuestos/extras) cargados a esta reparación.\n\n` +
       `¿Querés eliminar la reparación y sus materiales asociados?`;
   }
+
+  if (nombreTabla === "reparaciones_extra") {
+  mensaje = `⚠️ ¡ATENCIÓN!\n\n` +
+            `Estás eliminando un registro de insumo extra permanentemente.\n` +
+            `Esta acción no se puede deshacer.\n\n` +
+            `¿Deseas continuar?`;
+}
 
   const confirmar = confirm(mensaje);
   if (!confirmar) return;

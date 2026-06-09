@@ -118,31 +118,80 @@ router.get('/listarExtras', async (req, res) => {
 
 //--------------------------------------------------------------
 
-//---------------------------------------------------
-// RUTA PARA BORRADO DEFINITIVO 
-//---------------------------------------------------
-router.delete('/eliminarExtra/:id', async (req, res) => {
-    const idExtra = req.params.id;
+// BORRAR DE FORMA LOGICA REPARACIONES_EXTRA 
 
+router.put('/papeleraExtra/:id', async (req, res) => {
+    const { id } = req.params;
+    
+    // Solo actualizamos el estado, NADA MÁS
+    const { error } = await supabase
+        .from('reparacion_Extra')
+        .update({ estado: 1 })
+        .eq('id_Extra', id);
+
+    if (error) return res.status(400).json({ error: error.message });
+    res.status(200).json({ mensaje: "Registro enviado a papelera." });
+});
+
+
+
+
+//---------------------------------------------------------------
+// VER EN PAPELERA REGISTROS BORRADOS L.
+
+router.get('/listarP_Extra', async (req, res) => {
     try {
-        // Hacemos el borrado físico directo
-        const { error: errExtra } = await supabase
+        const { data, error } = await supabase
             .from('reparacion_Extra')
-            .delete()
-            .eq('id_Extra', idExtra);
+            .select('id_Extra, fechaExtra, reparacion_ID, producto_ID, cantidad_Extra, estado')
+            .eq('estado', 1)
+            .order('fechaExtra', { ascending: false });
 
-        if (errExtra) {
-            return res.status(400).json({ error: errExtra.message });
-        }
+        if (error) return res.status(400).json({ error: error.message });
 
-        res.status(200).json({ mensaje: "Registro eliminado permanentemente del sistema." });
-
+        res.status(200).json(data);
     } catch (err) {
-        console.error("Error al eliminar registro extra:", err);
-        res.status(500).json({ error: "Error interno del servidor al eliminar." });
+        res.status(500).json({ error: "Error al listar la papelera de extras." });
     }
 });
 
+//----------------------------------------------------------------
+// RESTAURAR REGISTROS DE REPARACION_EXTRA
+
+
+
+router.put('/restaurarExtra/:id', async (req, res) => {
+    const id_Extra = req.params.id;
+
+    try {
+        const { data, error } = await supabase
+            .from('reparacion_Extra')
+            .update({ estado: 0 })
+            .eq('id_Extra', id_Extra)
+            .select();
+
+        if (error) return res.status(400).json({ error: error.message });
+        if (data.length === 0) return res.status(404).json({ error: "Registro no encontrado." });
+
+        res.status(200).json({ mensaje: "Registro restaurado correctamente." });
+    } catch (err) {
+        res.status(500).json({ error: "Error al restaurar." });
+    }
+});
+
+//---------------------------------------------------
+
+// ELIMINAR DEFINITIVO
+
+router.delete('/eliminarExtra/:id', async (req, res) => {
+    const { error } = await supabase
+        .from('reparacion_Extra')
+        .delete()
+        .eq('id_Extra', req.params.id);
+
+    if (error) return res.status(400).json({ error: error.message });
+    res.status(200).json({ mensaje: "Extra eliminado permanentemente." });
+});
 
 
 
